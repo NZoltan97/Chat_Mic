@@ -1,14 +1,15 @@
 package com.ticketninja.pilot.validator;
 
 import org.springframework.web.util.HtmlUtils;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.CheckSumException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.CommentException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.HNumberException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.NameException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.OrgNameException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.SettlementException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.StreetException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.ZipCodeException;
+
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.CodeValidationExceptions.CheckSumException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.CommentException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.HNumberException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.NameException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.OrgNameException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.SettlementException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.StreetException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.ZipCodeException;
 import com.ticketninja.pilot.model.UserInfo;
 
 public class Validator {

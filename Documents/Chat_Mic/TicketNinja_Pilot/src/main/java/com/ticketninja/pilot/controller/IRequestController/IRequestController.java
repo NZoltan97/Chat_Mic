@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ticketninja.pilot.dto.AttributeDTO;
-import com.ticketninja.pilot.dto.ChatFuelDTO;
 
 public interface IRequestController {
 

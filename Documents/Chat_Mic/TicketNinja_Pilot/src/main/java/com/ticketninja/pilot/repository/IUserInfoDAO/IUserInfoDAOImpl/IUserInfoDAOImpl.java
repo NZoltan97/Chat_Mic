@@ -4,8 +4,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.ticketninja.pilot.exceptions.DAOExceptions.EmailNotFoundException;
-import com.ticketninja.pilot.exceptions.DAOExceptions.UserIDNotFoundException;
+
+import com.ticketninja.pilot.exceptions.DAOExceptions.SearchingExceptions.EmailNotFoundException;
+import com.ticketninja.pilot.exceptions.DAOExceptions.SearchingExceptions.UserIDNotFoundException;
 import com.ticketninja.pilot.model.UserInfo;
 import com.ticketninja.pilot.repository.IUserInfoDAO.IUserInfoDAO;
 import com.ticketninja.pilot.services.IMainService.IMainServiceImpl.IMainServiceImpl;
