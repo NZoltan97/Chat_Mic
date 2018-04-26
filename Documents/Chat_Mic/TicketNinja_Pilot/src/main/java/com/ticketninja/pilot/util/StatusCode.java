@@ -9,8 +9,9 @@ public final class StatusCode {
 	public static final String INVALIDSTREET="5";
 	public static final String INVALIDHNUMBER="6";
 	public static final String INVALIDNAME="7";
-	public static final String UNKNOWNERROR="Unknown error occured!";
 	public static final String INVALIDCHECKSUM="9";
 	public static final String ALREADYFOUNDMAILADDRESS="10";
-	public static final String MAILADDRESSNOTFOUND="Unknown email address!";
+	public static final String INVALIDCOMMENT ="11";
+	public static final String MAILADDRESSNOTFOUND="Unknown e-mail address!";
+	public static final String USERIDNOTFOUND="Unknown user ID!";
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ticketninja.pilot.controller.IRequestController.IRequestController;
 import com.ticketninja.pilot.dto.AttributeDTO;
-import com.ticketninja.pilot.dto.ChatFuelDTO;
 import com.ticketninja.pilot.services.IMainService.IMainServiceImpl.IMainServiceImpl;
 
 @RestController

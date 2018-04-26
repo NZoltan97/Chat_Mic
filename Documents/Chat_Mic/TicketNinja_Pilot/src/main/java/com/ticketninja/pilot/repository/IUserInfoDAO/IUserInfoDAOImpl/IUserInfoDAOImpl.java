@@ -4,7 +4,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.ticketninja.pilot.exceptions.*;
+import com.ticketninja.pilot.exceptions.DAOExceptions.EmailNotFoundException;
+import com.ticketninja.pilot.exceptions.DAOExceptions.UserIDNotFoundException;
 import com.ticketninja.pilot.model.UserInfo;
 import com.ticketninja.pilot.repository.IUserInfoDAO.IUserInfoDAO;
 import com.ticketninja.pilot.services.IMainService.IMainServiceImpl.IMainServiceImpl;
@@ -24,7 +25,6 @@ public class IUserInfoDAOImpl {
 		} catch (Exception e) {
 			LOGGER.log(Level.ALL, e.toString(), e);
 		}
-		
 	}
 
 	// Delete the user having the passed mail address.
@@ -105,17 +105,4 @@ public class IUserInfoDAOImpl {
 			userFromDB.setComment(comment);
 			saveUser(userFromDB);
 		}
-		
-	/*
-	public boolean searchByEmail(String mail) {
-		List<UserInfo> users=userDao.findAll();		
-		for(int i=0;i<users.size();i++) {
-			if((users.get(i).getMail().compareTo(mail)==0)&&(users.get(i).isValid())) {
-				Logger.getLogger(MailService.class.getName()).log(Level.SEVERE, null, "Voltam itt");
-				return true;
-			}
-		}
-		return false;
-	}*/
-
 }

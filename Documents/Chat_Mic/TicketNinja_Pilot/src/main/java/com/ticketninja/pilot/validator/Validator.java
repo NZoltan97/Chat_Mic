@@ -1,9 +1,14 @@
 package com.ticketninja.pilot.validator;
 
-import java.util.zip.ZipException;
-
 import org.springframework.web.util.HtmlUtils;
-import com.ticketninja.pilot.exceptions.*;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.CheckSumException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.CommentException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.HNumberException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.NameException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.OrgNameException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.SettlementException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.StreetException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.ZipCodeException;
 import com.ticketninja.pilot.model.UserInfo;
 
 public class Validator {
@@ -52,6 +57,12 @@ public class Validator {
 	public void validateName(String s) throws NameException {
 		if (!(!s.isEmpty() && (s.length() >= 3 && s.length() <= 12) && !isHtml(s))) {
 			throw new NameException();
+		}
+	}
+	
+	public void validateComment(String comment) throws CommentException {
+		if(comment.isEmpty() || comment.length()>1000 || isHtml(comment)) {
+			throw new CommentException();
 		}
 	}
 

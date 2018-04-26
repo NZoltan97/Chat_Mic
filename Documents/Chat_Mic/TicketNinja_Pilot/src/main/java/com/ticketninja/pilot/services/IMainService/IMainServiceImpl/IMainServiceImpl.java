@@ -10,14 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ticketninja.pilot.dto.AttributeDTO;
-import com.ticketninja.pilot.exceptions.CheckSumException;
-import com.ticketninja.pilot.exceptions.EmailNotFoundException;
-import com.ticketninja.pilot.exceptions.HNumberException;
-import com.ticketninja.pilot.exceptions.NameException;
-import com.ticketninja.pilot.exceptions.OrgNameException;
-import com.ticketninja.pilot.exceptions.SettlementException;
-import com.ticketninja.pilot.exceptions.StreetException;
-import com.ticketninja.pilot.exceptions.ZipCodeException;
+import com.ticketninja.pilot.exceptions.DAOExceptions.EmailNotFoundException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.CheckSumException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.CommentException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.HNumberException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.NameException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.OrgNameException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.SettlementException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.StreetException;
+import com.ticketninja.pilot.exceptions.ValidatorExceptions.ZipCodeException;
 import com.ticketninja.pilot.model.UserInfo;
 import com.ticketninja.pilot.repository.IUserInfoDAO.IUserInfoDAOImpl.IUserInfoDAOImpl;
 import com.ticketninja.pilot.services.IEmailService.IEmailServiceImpl.IEmailServiceImpl;
@@ -68,9 +69,11 @@ public class IMainServiceImpl implements IMainService {
 			userDao.setZipCode(zipCode, mail);
 			isCorrect = StatusCode.OK;
 		} catch (ZipCodeException e) {
-			e.getException();
+			isCorrect=e.getException();
 		} catch (EmailNotFoundException e) {
 			LOGGER.log(Level.ALL, e.getException(), e);
+		}finally {
+			attDto.addAttribute(isCorrect);
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
@@ -137,10 +140,12 @@ public class IMainServiceImpl implements IMainService {
 
 	public ResponseEntity<AttributeDTO> giveContactsComment(String comment, String mail, String isCorrect) {
 		try {
-			// validate comment
+			validator.validateComment(comment);			
 			userDao.setComment(comment, mail);
 			isCorrect = StatusCode.OK;
-		} catch (EmailNotFoundException e) {
+		}catch(CommentException e) {
+			isCorrect=e.getException();
+		}catch (EmailNotFoundException e) {
 			LOGGER.log(Level.ALL, e.getException(), e);
 		} finally {
 			attDto.addAttribute(isCorrect);
