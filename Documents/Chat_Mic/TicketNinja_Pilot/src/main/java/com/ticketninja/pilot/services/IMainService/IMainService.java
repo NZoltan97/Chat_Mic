@@ -2,10 +2,11 @@ package com.ticketninja.pilot.services.IMainService;
 
 import org.springframework.http.ResponseEntity;
 
-import com.ticketninja.pilot.dto.AttributeDTO;
+import com.ticketninja.pilot.dtos.AttributeDTO;
 
 public interface IMainService {
 	//Service methods
+	//Give-eket törölni
 	public ResponseEntity<AttributeDTO> giveWholeInfo(String organizationName, String settlement, String contName,
 			String mail, String street, String houseNumber, String zipCode, String isCorrect);
 	public ResponseEntity<AttributeDTO> giveOrganizationName(String orgName, String mail,String isCorrect);

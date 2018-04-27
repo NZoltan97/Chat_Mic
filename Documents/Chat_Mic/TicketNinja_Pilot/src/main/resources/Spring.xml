@@ -19,9 +19,11 @@
 		</property>
 	</bean>
 
-	<bean id="mailService" class="com.ticketninja.pilot.services.IEmailService.IEmailServiceImpl.IEmailServiceImpl">
+	<bean id="mailService" class="com.ticketninja.pilot.services.EmailService.impl.EmailServiceImpl">
 		<property name="mailSender" ref="mailSender" />
 	</bean>
+	
+	
 	
 </beans> 
 

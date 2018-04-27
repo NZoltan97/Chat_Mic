@@ -9,22 +9,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.ticketninja.pilot.dto.AttributeDTO;
-import com.ticketninja.pilot.exceptions.DAOExceptions.SearchingExceptions.EmailNotFoundException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.CodeValidationExceptions.CheckSumException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.CommentException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.HNumberException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.NameException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.OrgNameException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.SettlementException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.StreetException;
-import com.ticketninja.pilot.exceptions.ValidatorExceptions.UserAttributeExceptions.ZipCodeException;
+import com.ticketninja.pilot.dtos.AttributeDTO;
+import com.ticketninja.pilot.exceptions.CheckSumException;
+import com.ticketninja.pilot.exceptions.CommentException;
+import com.ticketninja.pilot.exceptions.EmailNotFoundException;
+import com.ticketninja.pilot.exceptions.HNumberException;
+import com.ticketninja.pilot.exceptions.NameException;
+import com.ticketninja.pilot.exceptions.OrgNameException;
+import com.ticketninja.pilot.exceptions.SettlementException;
+import com.ticketninja.pilot.exceptions.StreetException;
+import com.ticketninja.pilot.exceptions.ZipCodeException;
 import com.ticketninja.pilot.model.UserInfo;
-import com.ticketninja.pilot.repository.IUserInfoDAO.IUserInfoDAOImpl.IUserInfoDAOImpl;
-import com.ticketninja.pilot.services.IEmailService.IEmailServiceImpl.IEmailServiceImpl;
+import com.ticketninja.pilot.repository.impl.UserInfoDAOImpl;
+import com.ticketninja.pilot.services.EmailService.impl.EmailServiceImpl;
 import com.ticketninja.pilot.services.IMainService.IMainService;
 import com.ticketninja.pilot.util.StatusCode;
-import com.ticketninja.pilot.validator.Validator;
+import com.ticketninja.pilot.validator.IValidator;
+import com.ticketninja.pilot.validator.impl.ValidatorImpl;
+
 
 @Service
 public class IMainServiceImpl implements IMainService {
@@ -32,11 +34,11 @@ public class IMainServiceImpl implements IMainService {
 	private static final Logger LOGGER = Logger.getLogger(IMainServiceImpl.class.getName());
 
 	@Autowired
-	private IUserInfoDAOImpl userDao;
+	private UserInfoDAOImpl userDao;
 
 	private AttributeDTO attDto=new AttributeDTO();
 	
-	private Validator validator=new Validator();
+	private IValidator validator=new ValidatorImpl();
 
 	// Service methods
 
@@ -49,7 +51,10 @@ public class IMainServiceImpl implements IMainService {
 	}
 
 	public ResponseEntity<AttributeDTO> giveOrganizationName(String orgName, String mail, String isCorrect) {
+		
 		try {
+			
+			// isCorrect kiszervezése
 			validator.validateOrgName(orgName);
 			userDao.setOrgName(orgName, mail);
 			isCorrect = StatusCode.OK;
@@ -176,9 +181,10 @@ public class IMainServiceImpl implements IMainService {
 			isCorrect = StatusCode.ALREADYFOUNDMAILADDRESS;
 		} catch (EmailNotFoundException e) {
 			try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml")) {
-				IEmailServiceImpl m = (IEmailServiceImpl) context.getBean("mailService");
+				EmailServiceImpl m = (EmailServiceImpl) context.getBean("mailService");
 				UserInfo uInfo = new UserInfo(mail);
 				userDao.saveUser(uInfo);
+			
 				m.sendMail(uInfo.getMail(), uInfo.getCheckS());
 				isCorrect = StatusCode.OK;
 			}
@@ -197,7 +203,7 @@ public class IMainServiceImpl implements IMainService {
 			isCorrect = StatusCode.ALREADYFOUNDMAILADDRESS;
 		} catch (EmailNotFoundException e) {
 			try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml")) {
-				IEmailServiceImpl m = (IEmailServiceImpl) context.getBean("mailService");
+				EmailServiceImpl m = (EmailServiceImpl) context.getBean("mailService");
 				UserInfo uInfo = new UserInfo(mail);
 				userDao.saveUser(uInfo);
 				m.sendMail(uInfo.getMail(), uInfo.getCheckS());

@@ -2,6 +2,10 @@ package com.ticketninja.pilot.util;
 
 public final class StatusCode {
 
+	
+	//enum
+	
+	
 	public static final String OK="1";
 	public static final String INVALIDORGNAME="2";
 	public static final String INVALIDZIPCODE="3";

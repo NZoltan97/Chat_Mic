@@ -10,10 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.ticketninja.pilot.validator.IValidator;
+import com.ticketninja.pilot.validator.impl.ValidatorImpl;
+
 @Entity
 @Table(name = "users")
 public class UserInfo implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
+	private IValidator validator=new ValidatorImpl(); 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
@@ -101,6 +107,7 @@ public class UserInfo implements Serializable{
 	}
 
 	public void setOrgSettlement(String orgSettlement) {
+		
 		this.orgSettlement = orgSettlement;
 	}
 
