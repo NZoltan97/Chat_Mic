@@ -29,7 +29,10 @@ public class Validator {
 	public void validateZip(String s) throws ZipCodeException {
 		try {
 			Integer.parseInt(s);
-		} catch (Exception e) {
+			if (s.length() != 4 || s.isEmpty()) {
+				throw new ZipCodeException();
+			}
+		} catch (NumberFormatException e) {
 			throw new ZipCodeException();
 		}
 	}
