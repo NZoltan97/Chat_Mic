@@ -16,6 +16,7 @@ import com.ticketninja.pilot.validator.impl.ValidatorImpl;
 @Entity
 @Table(name = "users")
 public class UserInfo implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	private IValidator validator=new ValidatorImpl(); 

@@ -1,7 +1,9 @@
 package com.ticketninja.pilot.services.EmailService;
 
+import com.ticketninja.pilot.dtos.MailDTO;
 
 public interface IEmailService {
-	public void sendMail(String to, String msg);
-	public void sendHtmlEmail(String to, String msg);
+	
+	public void sendMail(MailDTO dto);
+	//public void sendHtmlEmail(String to, String msg);
 }
