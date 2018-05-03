@@ -65,9 +65,9 @@ public class ValidatorImpl implements IValidator {
 		}
 	}
 
-	public void mailIsCleanFromXSS(String mail) throws MailException {
+	public void mailIsCleanFromXSS(String mail) throws ValidatorException {
 		if(mail==null || isHtml(mail)) {
-			throw new MailException(Status.INVALIDMAILCONTENT);
+			throw new ValidatorException(Status.INVALIDMAILCONTENT);
 		}
 	}
 

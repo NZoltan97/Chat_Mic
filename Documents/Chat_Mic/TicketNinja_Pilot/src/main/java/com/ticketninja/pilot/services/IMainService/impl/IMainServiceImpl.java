@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ticketninja.pilot.dtos.AttributeDTO;
+import com.ticketninja.pilot.dtos.MailDTO;
 import com.ticketninja.pilot.exceptions.ValidatorException;
 import com.ticketninja.pilot.model.UserInfo;
 import com.ticketninja.pilot.repository.impl.UserInfoDAOImpl;
@@ -165,49 +166,52 @@ public class IMainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-//	public ResponseEntity<AttributeDTO> sendingMail(String mail) {
-//		int isCorrect = 0;
-//		try {
-//			userDao.getUserByEmail(mail);
-//			isCorrect = Status.ALREADYFOUNDMAILADDRESS.code();
-//		} catch (ValidatorException e) {
-//			try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml")) {
-//				EmailServiceImpl m = (EmailServiceImpl) context.getBean("mailService");
-//				UserInfo uInfo = new UserInfo(mail);
-//				userDao.saveUser(uInfo);
-//
-//				m.sendMail(uInfo.getMail(), uInfo.getCheckS());
-//				isCorrect = StatusCode.OK;
-//			}
-//		} catch (Exception e) {
-//			LOGGER.log(Level.ALL, e.getMessage(), e);
-//		} finally {
-//			attDto.addAttribute(isCorrect);
-//		}
-//		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
-//	}
-//
-//	// In progress
-//	public ResponseEntity<AttributeDTO> sendingMimeMail(String mail, String isCorrect) {
-//		try {
-//			userDao.getUserByEmail(mail);
-//			isCorrect = StatusCode.ALREADYFOUNDMAILADDRESS;
-//		} catch (EmailNotFoundException e) {
-//			try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml")) {
-//				EmailServiceImpl m = (EmailServiceImpl) context.getBean("mailService");
-//				UserInfo uInfo = new UserInfo(mail);
-//				userDao.saveUser(uInfo);
-//				m.sendMail(uInfo.getMail(), uInfo.getCheckS());
-//				isCorrect = StatusCode.OK;
-//			}
-//		} catch (Exception e) {
-//			LOGGER.log(Level.ALL, e.getMessage(), e);
-//		} finally {
-//			attDto.addAttribute(isCorrect);
-//		}
-//
-//		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
-//
-//	}
+	public ResponseEntity<AttributeDTO> validateMailAddress(String mail) {
+		try {
+			userDao.getUserByEmail(mail);
+			isCorrect = StatusCode.ALREADYFOUNDMAILADDRESS;
+		} catch (EmailNotFoundException e) {
+			UserInfo user = new UserInfo(mail);
+			MailDTO mailDto = new MailDTO(mail, "Email verifikáció", "checkSum", user.getCheckS());
+			EmailServiceImpl sendingMail = new EmailServiceImpl();
+			sendingMail.sendMail(mailDto);
 
+			/*
+			 * try (ClassPathXmlApplicationContext context = new
+			 * ClassPathXmlApplicationContext("Spring.xml")) { EmailServiceImpl m =
+			 * (EmailServiceImpl) context.getBean("mailService"); UserInfo uInfo = new
+			 * UserInfo(mail); userDao.saveUser(uInfo);
+			 * 
+			 * m.sendMail(uInfo.getMail(), uInfo.getCheckS()); isCorrect = StatusCode.OK; }
+			 */
+		} catch (Exception e) {
+			LOGGER.log(Level.ALL, e.getMessage(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+	}
+
+	// In progress
+	public ResponseEntity<AttributeDTO> sendingMimeMail(String mail, String isCorrect) {
+		try {
+			userDao.getUserByEmail(mail);
+			isCorrect = StatusCode.ALREADYFOUNDMAILADDRESS;
+		} catch (EmailNotFoundException e) {
+			try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml")) {
+				EmailServiceImpl m = (EmailServiceImpl) context.getBean("mailService");
+				UserInfo uInfo = new UserInfo(mail);
+				userDao.saveUser(uInfo);
+				m.sendMail(uInfo.getMail(), uInfo.getCheckS());
+				isCorrect = StatusCode.OK;
+			}
+		} catch (Exception e) {
+			LOGGER.log(Level.ALL, e.getMessage(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+
+	}
 }

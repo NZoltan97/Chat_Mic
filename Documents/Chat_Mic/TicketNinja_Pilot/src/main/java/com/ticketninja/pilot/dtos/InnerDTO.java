@@ -3,8 +3,6 @@ package com.ticketninja.pilot.dtos;
 
 public class InnerDTO {
 	
-	//private IValidator validator=new ValidatorImpl();
-	
 	private String orgName;
 
 	private String orgSettlement;
@@ -24,6 +22,7 @@ public class InnerDTO {
 	private boolean isValid;
 	
 	private String comment;
+	
 
 	public InnerDTO() {};
 	
