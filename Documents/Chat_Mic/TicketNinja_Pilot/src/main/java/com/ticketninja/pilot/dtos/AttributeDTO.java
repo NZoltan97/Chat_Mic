@@ -15,8 +15,9 @@ public class AttributeDTO {
 		return name;
 	}
 
-	public void addAttribute(String value) {
-		this.name = new AttributeName(value);
+	public void addAttribute(int value) {
+		String stringValue = Integer.toString(value);
+		this.name = new AttributeName(stringValue);
 		
 	}
 
