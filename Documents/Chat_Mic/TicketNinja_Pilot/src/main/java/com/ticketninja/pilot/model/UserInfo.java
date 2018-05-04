@@ -1,7 +1,6 @@
 package com.ticketninja.pilot.model;
 
 import java.io.Serializable;
-import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,16 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.ticketninja.pilot.validator.IValidator;
-import com.ticketninja.pilot.validator.impl.ValidatorImpl;
 
 @Entity
 @Table(name = "users")
 public class UserInfo implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
-	
-	private IValidator validator=new ValidatorImpl(); 
+	private static final long serialVersionUID = 1L; 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,7 +52,7 @@ public class UserInfo implements Serializable{
 	private String comment;
 
 	public UserInfo(String orgName, String orgSettlement, String contName, String mail, String orgStreet,
-			String houseNum, String zipCode) {
+			String houseNum, String zipCode, String checkSum) {
 		this.orgName = orgName;
 		this.orgSettlement = orgSettlement;
 		this.contName = contName;
@@ -66,17 +61,16 @@ public class UserInfo implements Serializable{
 		this.houseNum = houseNum;
 		this.zipCode = zipCode;
 		this.isValid=false;
-		setCheckS();
 	}
 
 	public UserInfo() {
 		super();
 	}
 
-	public UserInfo(String mail) {
+	public UserInfo(String mail, String checkSum) {
 		this.mail = mail;
 		this.isValid=false;
-		setCheckS();
+		this.checkS=checkSum;
 	}
 
 	public long getId() {
@@ -156,9 +150,8 @@ public class UserInfo implements Serializable{
 		return checkS;
 	}
 
-	private void setCheckS() {
-		Random rnd = new Random();
-		this.checkS = "" + (rnd.nextInt(8999) + 1000);
+	public void setCheckS(String checkSum) {
+		this.checkS = checkSum;
 	}
 
 	public String getComment() {

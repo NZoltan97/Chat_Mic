@@ -10,7 +10,9 @@ public interface IRequestController {
 	public ResponseEntity<AttributeDTO> giveWholeInfo(@RequestParam("organizationName") String organizationName,
 			@RequestParam("settlement") String settlement, @RequestParam("contName") String contName,
 			@RequestParam("mail") String mail, @RequestParam("street") String street,
-			@RequestParam("houseNumber") String houseNumber, @RequestParam("zipCode") String zipCode, @RequestParam("isCorrect") String isCorrect);
+			@RequestParam("houseNumber") String houseNumber, @RequestParam("zipCode") String zipCode,
+			@RequestParam("checkSum") String checkSum,
+			@RequestParam("comment") String comment, @RequestParam("isCorrect") String isCorrect);
 
 	public ResponseEntity<AttributeDTO> giveOrganizationName(@RequestParam("orgName") String orgName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);

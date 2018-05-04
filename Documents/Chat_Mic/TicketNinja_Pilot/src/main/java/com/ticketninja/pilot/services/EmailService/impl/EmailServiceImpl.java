@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.ticketninja.pilot.dtos.MailDTO;
+import com.ticketninja.pilot.dtos.MailValidationDTO;
 import com.ticketninja.pilot.model.MailContent;
 import com.ticketninja.pilot.model.MailContentFactory;
 import com.ticketninja.pilot.services.EmailService.IEmailService;
@@ -16,7 +16,7 @@ public class EmailServiceImpl implements IEmailService{
 	
 	@Autowired
 	private JavaMailSender mailSender;
-	private MailContent content; 
+	private MailContent content;
 	private MailContentFactory factory=new MailContentFactory();
 	
     public void setMailSender(JavaMailSender mailSender) {
@@ -24,9 +24,9 @@ public class EmailServiceImpl implements IEmailService{
     }
     
 	
-    public void sendMail(MailDTO dto) {
+    public void sendMail(MailValidationDTO mailDto) {
     	
-    	content=factory.createVerificationMailContent(dto);
+    	content=factory.createVerificationMailContent(mailDto);
     	mailSender.send(content.getSimpleMailMessage());  
     }
     
