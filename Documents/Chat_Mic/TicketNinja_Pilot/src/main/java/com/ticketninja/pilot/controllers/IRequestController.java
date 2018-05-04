@@ -39,6 +39,6 @@ public interface IRequestController {
 	public ResponseEntity<AttributeDTO> sendingMail(@RequestParam("mail") String mail,
 			@RequestParam("isCorrect") String isCorrect);
 
-	public ResponseEntity<AttributeDTO> sendingMimeMail(@RequestParam("mail") String mail,
-			@RequestParam("isCorrect") String isCorrect);
+//	public ResponseEntity<AttributeDTO> sendingMimeMail(@RequestParam("mail") String mail,
+//			@RequestParam("isCorrect") String isCorrect);
 }

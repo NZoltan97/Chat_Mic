@@ -86,14 +86,14 @@ public class RequestControllerImpl implements IRequestController {
 	@RequestMapping(value = "/giveMail", method = RequestMethod.GET)
 	public ResponseEntity<AttributeDTO> sendingMail(@RequestParam("mail") String mail,
 			@RequestParam("isCorrect") String isCorrect) {
-		return service.sendingMail(mail);
-	} 
+		return service.validateMailAddress(mail);
+	}
 
 	// Send HTML e-mail to user with checksum and store user by its e-mail
-	@RequestMapping(value = "/giveGetMimeMail", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendingMimeMail(@RequestParam("mail") String mail,
-			@RequestParam("isCorrect") String isCorrect) {
-		return service.sendingMimeMail(mail);
-	}
+//	@RequestMapping(value = "/giveGetMimeMail", method = RequestMethod.GET, produces = "application/json")
+//	public ResponseEntity<AttributeDTO> sendingMimeMail(@RequestParam("mail") String mail,
+//			@RequestParam("isCorrect") String isCorrect) {
+//		return service.sendingMimeMail(mail);
+//	}
 
 }
