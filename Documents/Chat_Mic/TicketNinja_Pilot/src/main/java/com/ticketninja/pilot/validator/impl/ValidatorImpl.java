@@ -10,7 +10,15 @@ import com.ticketninja.pilot.validator.IValidator;
 public class ValidatorImpl implements IValidator {
 
 	public void validateCheckSum(String checkSumFromUser, UserInfo user) throws ValidatorException {
-		if (user.getCheckS().compareTo(checkSumFromUser) != 0) {
+		try {
+			int checkTemp=Integer.parseInt(checkSumFromUser);
+			if (checkSumFromUser.length() != 4 || checkSumFromUser.isEmpty()) {
+				throw new ValidatorException(Status.INVALIDCHECKSUM);
+			}
+			else if(checkTemp!=user.getCheckSum()) {
+				throw new ValidatorException(Status.INVALIDCHECKSUM);
+			}
+		} catch (NumberFormatException e) {
 			throw new ValidatorException(Status.INVALIDCHECKSUM);
 		}
 	}
@@ -33,7 +41,7 @@ public class ValidatorImpl implements IValidator {
 	}
 
 	public void validateSettlement(String s) throws ValidatorException {
-		if (!(!s.isEmpty() || (s.length() >= 5 && s.length() <= 50) || !isHtml(s))) {
+		if (!(!s.isEmpty() || (s.length() >= 3 && s.length() <= 50) || !isHtml(s))) {
 			throw new ValidatorException(Status.INVALIDSETTLEMENT);
 		}
 	}

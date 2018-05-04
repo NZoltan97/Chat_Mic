@@ -42,8 +42,8 @@ public class UserInfo implements Serializable{
 	@Column(name="zipCode")
 	private String zipCode;
 
-	@Column(name="checkS")
-	private String checkS;
+	@Column(name="checkSum")
+	private int checkSum;
 	
 	@Column(name="isValid")
 	private boolean isValid;
@@ -51,26 +51,12 @@ public class UserInfo implements Serializable{
 	@Column(name="comment")
 	private String comment;
 
-	public UserInfo(String orgName, String orgSettlement, String contName, String mail, String orgStreet,
-			String houseNum, String zipCode, String checkSum) {
-		this.orgName = orgName;
-		this.orgSettlement = orgSettlement;
-		this.contName = contName;
-		this.mail = mail;
-		this.orgStreet = orgStreet;
-		this.houseNum = houseNum;
-		this.zipCode = zipCode;
-		this.isValid=false;
-	}
+	public UserInfo() {}
 
-	public UserInfo() {
-		super();
-	}
-
-	public UserInfo(String mail, String checkSum) {
+	public UserInfo(String mail, int checkSum) {
 		this.mail = mail;
 		this.isValid=false;
-		this.checkS=checkSum;
+		this.checkSum=checkSum;
 	}
 
 	public long getId() {
@@ -146,12 +132,12 @@ public class UserInfo implements Serializable{
 		this.zipCode = zipCode;
 	}
 
-	public String getCheckS() {
-		return checkS;
+	public int getCheckSum() {
+		return checkSum;
 	}
 
-	public void setCheckS(String checkSum) {
-		this.checkS = checkSum;
+	public void setCheckSum(int checkSum) {
+		this.checkSum = checkSum;
 	}
 
 	public String getComment() {

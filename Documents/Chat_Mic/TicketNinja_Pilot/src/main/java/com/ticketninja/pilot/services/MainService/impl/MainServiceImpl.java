@@ -10,11 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.ticketninja.pilot.dtos.AttributeDTO;
 import com.ticketninja.pilot.dtos.InnerDTO;
-import com.ticketninja.pilot.dtos.MailValidationDTO;
 import com.ticketninja.pilot.exceptions.ValidatorException;
 import com.ticketninja.pilot.model.UserInfo;
 import com.ticketninja.pilot.repository.impl.UserInfoDAOImpl;
-import com.ticketninja.pilot.services.EmailService.impl.EmailServiceImpl;
 import com.ticketninja.pilot.services.MainService.IMainService;
 import com.ticketninja.pilot.util.Status;
 import com.ticketninja.pilot.validator.IValidator;
@@ -27,25 +25,12 @@ public class MainServiceImpl implements IMainService {
 	
 	@Autowired
 	private UserInfoDAOImpl userDao;
-
-	@Autowired
-	private EmailServiceImpl mailService;
 	
 	private AttributeDTO attDto = new AttributeDTO();
 
 	private IValidator validator = new ValidatorImpl();
 
 	// Service methods
-
-	public ResponseEntity<AttributeDTO> saveWholeInfo(InnerDTO innerDto) {
-		int isCorrect;
-		UserInfo uInfo = new UserInfo(innerDto.getOrgName(), innerDto.getOrgSettlement(), innerDto.getContName(), innerDto.getMail(),
-				innerDto.getOrgStreet(), innerDto.getHouseNum(), innerDto.getZipCode(), innerDto.getCheckS());
-		userDao.saveUser(uInfo);
-		isCorrect = Status.OK.code();
-		attDto.addAttribute(isCorrect);
-		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
-	}
 
 	public ResponseEntity<AttributeDTO> saveOrganizationName(InnerDTO innerDto) {
 		int isCorrect = 0;
@@ -156,7 +141,7 @@ public class MainServiceImpl implements IMainService {
 		int isCorrect = 0;
 		try {
 			UserInfo user = userDao.getUserByEmail(innerDto.getMail());
-			validator.validateCheckSum(innerDto.getCheckS(), user);
+			validator.validateCheckSum(innerDto.getCheckSum(), user);
 			user.setValid(true);
 			userDao.saveUser(user);
 			isCorrect = Status.OK.code();
@@ -169,23 +154,7 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	public ResponseEntity<AttributeDTO> validateMailAddress(MailValidationDTO mailDto) {
-		int isCorrect=0;
-		try {
-			userDao.getUserByEmail(mailDto.getTo());
-			isCorrect = Status.ALREADYFOUNDMAILADDRESS.code();
-		} catch (ValidatorException e) {
-			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
-			userDao.saveUser(user);
-				mailService.sendMail(mailDto);
-				isCorrect=Status.OK.code();
-		} catch (Exception e) {
-			LOGGER.log(Level.ALL, e.getMessage(), e);
-		} finally {
-			attDto.addAttribute(isCorrect);
-		}
-		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
-	}
+	
 
 	// In progress
 //	public ResponseEntity<AttributeDTO> sendingMimeMail(String mail, String isCorrect) {

@@ -15,26 +15,13 @@ public class InnerDTO {
 
 	private String houseNum;
 
-	private String zipCode;
-
-	private String checkS;
+	private String zipCode;	
+	
+	private String checkSum;
 	
 	private boolean isValid;
 	
 	private String comment;
-	
-	public InnerDTO(String orgName, String orgSettlement, String contName, String mail, String orgStreet,
-			String houseNum, String zipCode, String checkS, String comment) {
-		this.orgName = orgName;
-		this.orgSettlement = orgSettlement;
-		this.contName = contName;
-		this.mail = mail;
-		this.orgStreet = orgStreet;
-		this.houseNum = houseNum;
-		this.zipCode = zipCode;
-		this.checkS = checkS;
-		this.comment = comment;
-	}
 
 	public InnerDTO() {};
 	
@@ -107,12 +94,12 @@ public class InnerDTO {
 		this.zipCode = zipCode;
 	}
 
-	public String getCheckS() {
-		return checkS;
+	public String getCheckSum() {
+		return checkSum;
 	}
 
-	public void setCheckS(String checkS) {
-		this.checkS = checkS;
+	public void setCheckSum(String checkSum) {
+		this.checkSum = checkSum;
 	}
 
 	public String getComment() {

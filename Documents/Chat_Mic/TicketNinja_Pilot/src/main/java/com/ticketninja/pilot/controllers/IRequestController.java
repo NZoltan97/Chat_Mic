@@ -7,13 +7,6 @@ import com.ticketninja.pilot.dtos.AttributeDTO;
 
 public interface IRequestController {
 
-	public ResponseEntity<AttributeDTO> sendWholeInfo(@RequestParam("organizationName") String organizationName,
-			@RequestParam("settlement") String settlement, @RequestParam("contName") String contName,
-			@RequestParam("mail") String mail, @RequestParam("street") String street,
-			@RequestParam("houseNumber") String houseNumber, @RequestParam("zipCode") String zipCode,
-			@RequestParam("checkSum") String checkSum,
-			@RequestParam("comment") String comment, @RequestParam("isCorrect") String isCorrect);
-
 	public ResponseEntity<AttributeDTO> sendOrganizationName(@RequestParam("orgName") String orgName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 

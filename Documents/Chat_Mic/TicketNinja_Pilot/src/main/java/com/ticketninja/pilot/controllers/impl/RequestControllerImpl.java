@@ -11,25 +11,15 @@ import com.ticketninja.pilot.controllers.IRequestController;
 import com.ticketninja.pilot.dtos.AttributeDTO;
 import com.ticketninja.pilot.dtos.InnerDTO;
 import com.ticketninja.pilot.dtos.MailValidationDTO;
+import com.ticketninja.pilot.services.EmailService.impl.EmailServiceImpl;
 import com.ticketninja.pilot.services.MainService.impl.MainServiceImpl;
 
 @RestController
 public class RequestControllerImpl implements IRequestController {
 	@Autowired
 	MainServiceImpl service;
-
-	// GET request handler
-	@RequestMapping(value = "/sendUserInfo", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendWholeInfo(@RequestParam("organizationName") String organizationName,
-			@RequestParam("settlement") String settlement, @RequestParam("contName") String contName,
-			@RequestParam("mail") String mail, @RequestParam("street") String street,
-			@RequestParam("houseNumber") String houseNumber, @RequestParam("zipCode") String zipCode, @RequestParam("checkSum") String checkSum,
-			@RequestParam("comment") String comment , @RequestParam("isCorrect") String isCorrect) {
-		InnerDTO innerDto=new InnerDTO(organizationName, settlement, contName, mail, street, houseNumber, zipCode, checkSum, comment);
-		
-		return service.saveWholeInfo(innerDto);
-	}
-
+	@Autowired
+	EmailServiceImpl mailService;
 	// Get organization name
 	@RequestMapping(value = "/sendOrgName", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> sendOrganizationName(@RequestParam("orgName") String orgName,
@@ -105,7 +95,7 @@ public class RequestControllerImpl implements IRequestController {
 	public ResponseEntity<AttributeDTO> validateCheckSum(@RequestParam("checkSum") String checkSumFromUser,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto=new InnerDTO();
-		innerDto.setCheckS(checkSumFromUser);
+		innerDto.setCheckSum(checkSumFromUser);
 		innerDto.setMail(mail);
 		return service.validateCheckSum(innerDto);
 	}
@@ -115,7 +105,7 @@ public class RequestControllerImpl implements IRequestController {
 	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,
 			@RequestParam("isCorrect") String isCorrect) {
 		MailValidationDTO mailDto=new MailValidationDTO(mail, "Email verifikáció", "checkSum");
-		return service.validateMailAddress(mailDto);
+		return mailService.validateMailAddress(mailDto);
 	}
 
 	// Send HTML e-mail to user with checksum and store user by its e-mail

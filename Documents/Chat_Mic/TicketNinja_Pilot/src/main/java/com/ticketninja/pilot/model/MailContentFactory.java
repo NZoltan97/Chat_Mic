@@ -4,8 +4,8 @@ import com.ticketninja.pilot.dtos.MailValidationDTO;
 
 public class MailContentFactory {
 
-	public MailContent createVerificationMailContent(MailValidationDTO dto) {
-		MailContent content=new MailContent();
+	public VerificationMailContent createVerificationMailContent(MailValidationDTO dto) {
+		VerificationMailContent content=new VerificationMailContent();
 		content.setSubject(dto.getSubject());
 		content.setTo(dto.getTo());
 		content.setParameters(dto.getParameters());

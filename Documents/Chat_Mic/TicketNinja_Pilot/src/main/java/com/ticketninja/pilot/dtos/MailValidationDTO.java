@@ -8,7 +8,7 @@ public class MailValidationDTO {
 
 	private String to;
 	private String subject;
-	private String checkSum;
+	private int checkSum;
 	private Map<String, Object> parameters;
 	
 	public MailValidationDTO(String to, String subject, String key) {
@@ -41,14 +41,14 @@ public class MailValidationDTO {
 	public void addParameter(String key, Object value) {
 		this.parameters.put(key, value);
 	}
-	public String getCheckSum() {
+	public int getCheckSum() {
 		return checkSum;
 	}
 	
-	private String setCheckS() {
+	private int setCheckS() {
 		Random rnd = new Random();
-		this.checkSum = "" + (rnd.nextInt(8999) + 1000);
-		return this.checkSum;
+		this.checkSum = (rnd.nextInt(8999) + 1000);
+		return (Integer)this.checkSum;
 	}
 	
 	
