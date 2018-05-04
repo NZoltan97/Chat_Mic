@@ -3,17 +3,19 @@ package com.ticketninja.pilot.repository.impl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ticketninja.pilot.exceptions.ValidatorException;
 import com.ticketninja.pilot.model.UserInfo;
 import com.ticketninja.pilot.repository.IUserInfoDAO;
-import com.ticketninja.pilot.services.IMainService.impl.IMainServiceImpl;
 import com.ticketninja.pilot.util.Status;
 
+@Service
 public class UserInfoDAOImpl {
 
-	private static final Logger LOGGER = Logger.getLogger(IMainServiceImpl.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(UserInfoDAOImpl.class.getName());
 
 	@Autowired
 	private IUserInfoDAO userDao;

@@ -1,12 +1,11 @@
 package com.ticketninja.pilot.model;
 
-import com.ticketninja.pilot.dtos.MailDTO;
+import com.ticketninja.pilot.dtos.MailValidationDTO;
 
 public class MailContentFactory {
 
-	public MailContent createVerificationMailContent(MailDTO dto) {
+	public MailContent createVerificationMailContent(MailValidationDTO dto) {
 		MailContent content=new MailContent();
-		content.setFrom(dto.getFrom());
 		content.setSubject(dto.getSubject());
 		content.setTo(dto.getTo());
 		content.setParameters(dto.getParameters());

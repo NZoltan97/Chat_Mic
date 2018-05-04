@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class MailContent {
 
 	private String to;
-	private String from;
+	private String from="uniteamsze@gmail.com";
 	private String subject;
 	private Map<String, Object> parameters;
 

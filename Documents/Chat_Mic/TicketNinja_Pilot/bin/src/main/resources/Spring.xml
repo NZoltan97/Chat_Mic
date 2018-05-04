@@ -7,8 +7,8 @@
 	<bean id="mailSender"
 		class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
-		<property name="username" value="uniteamsze@gmail.com" />
-		<property name="password" value="Thecrew4" />
+		<property name="username" value="vkbubu1@gmail.com" />
+		<property name="password" value="figesz1997" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.auth">true</prop>
@@ -19,11 +19,9 @@
 		</property>
 	</bean>
 
-	<bean id="mailService" class="com.ticketninja.pilot.services.EmailService.impl.EmailServiceImpl">
+	<bean id="mailService" class="com.ticketninja.pilot.MailClient">
 		<property name="mailSender" ref="mailSender" />
 	</bean>
-	
-	
 	
 </beans> 
 
