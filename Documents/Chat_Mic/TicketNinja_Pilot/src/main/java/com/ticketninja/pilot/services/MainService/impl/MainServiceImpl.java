@@ -37,7 +37,7 @@ public class MainServiceImpl implements IMainService {
 
 	// Service methods
 
-	public ResponseEntity<AttributeDTO> giveWholeInfo(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveWholeInfo(InnerDTO innerDto) {
 		int isCorrect;
 		UserInfo uInfo = new UserInfo(innerDto.getOrgName(), innerDto.getOrgSettlement(), innerDto.getContName(), innerDto.getMail(),
 				innerDto.getOrgStreet(), innerDto.getHouseNum(), innerDto.getZipCode(), innerDto.getCheckS());
@@ -47,7 +47,7 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	public ResponseEntity<AttributeDTO> giveOrganizationName(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveOrganizationName(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			validator.validateOrgName(innerDto.getOrgName());
@@ -62,7 +62,7 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	public ResponseEntity<AttributeDTO> giveOrganisersZipCode(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveOrganisersZipCode(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			validator.validateZip(innerDto.getZipCode());
@@ -77,7 +77,7 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	public ResponseEntity<AttributeDTO> giveOrganisersSettlement(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveOrganisersSettlement(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			validator.validateSettlement(innerDto.getOrgSettlement());
@@ -92,7 +92,7 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	public ResponseEntity<AttributeDTO> giveOrganisersStreet(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveOrganisersStreet(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			validator.validateStreet(innerDto.getOrgStreet());
@@ -107,7 +107,7 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	public ResponseEntity<AttributeDTO> giveOrganisersHouseNumber(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveOrganisersHouseNumber(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			validator.validateHnumber(innerDto.getHouseNum());
@@ -122,7 +122,7 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	public ResponseEntity<AttributeDTO> giveContactName(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveContactName(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			validator.validateName(innerDto.getContName());
@@ -137,7 +137,7 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	public ResponseEntity<AttributeDTO> giveContactsComment(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveContactsComment(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			validator.validateComment(innerDto.getComment());

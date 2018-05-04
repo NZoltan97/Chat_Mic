@@ -19,85 +19,85 @@ public class RequestControllerImpl implements IRequestController {
 	MainServiceImpl service;
 
 	// GET request handler
-	@RequestMapping(value = "/giveUserInfo", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> giveWholeInfo(@RequestParam("organizationName") String organizationName,
+	@RequestMapping(value = "/sendUserInfo", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendWholeInfo(@RequestParam("organizationName") String organizationName,
 			@RequestParam("settlement") String settlement, @RequestParam("contName") String contName,
 			@RequestParam("mail") String mail, @RequestParam("street") String street,
 			@RequestParam("houseNumber") String houseNumber, @RequestParam("zipCode") String zipCode, @RequestParam("checkSum") String checkSum,
 			@RequestParam("comment") String comment , @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto=new InnerDTO(organizationName, settlement, contName, mail, street, houseNumber, zipCode, checkSum, comment);
 		
-		return service.giveWholeInfo(innerDto);
+		return service.saveWholeInfo(innerDto);
 	}
 
 	// Get organization name
-	@RequestMapping(value = "/giveOrgName", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> giveOrganizationName(@RequestParam("orgName") String orgName,
+	@RequestMapping(value = "/sendOrgName", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendOrganizationName(@RequestParam("orgName") String orgName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto=new InnerDTO();
 		innerDto.setOrgName(orgName);
 		innerDto.setMail(mail);
-		return service.giveOrganizationName(innerDto);
+		return service.saveOrganizationName(innerDto);
 	}
 
 	// Get organizer's zip code
-	@RequestMapping(value = "/giveOrgZip", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> giveOrganisersZipCode(@RequestParam("zipCode") String zipCode,
+	@RequestMapping(value = "/sendOrgZip", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendOrganisersZipCode(@RequestParam("zipCode") String zipCode,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto=new InnerDTO();
 		innerDto.setZipCode(zipCode);;
 		innerDto.setMail(mail);
-		return service.giveOrganisersZipCode(innerDto);
+		return service.saveOrganisersZipCode(innerDto);
 	}
 
 	// Get organizer's settlement
-	@RequestMapping(value = "/giveSettlement", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> giveOrganisersSettlement(@RequestParam("settlement") String settlement,
+	@RequestMapping(value = "/sendSettlement", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendOrganisersSettlement(@RequestParam("settlement") String settlement,
 			@RequestParam("isCorrect") String isCorrect, @RequestParam("mail") String mail) {
 		InnerDTO innerDto=new InnerDTO();
 		innerDto.setOrgSettlement(settlement);
 		innerDto.setMail(mail);
-		return service.giveOrganisersSettlement(innerDto);
+		return service.saveOrganisersSettlement(innerDto);
 	}
 
 	// Get organizer's street
-	@RequestMapping(value = "/giveStreet", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> giveOrganisersStreet(@RequestParam("street") String street,
+	@RequestMapping(value = "/sendStreet", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendOrganisersStreet(@RequestParam("street") String street,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto=new InnerDTO();
 		innerDto.setOrgStreet(street);
 		innerDto.setMail(mail);
-		return service.giveOrganisersStreet(innerDto);
+		return service.saveOrganisersStreet(innerDto);
 	}
 
 	// Get organizer's house number
-	@RequestMapping(value = "/giveHouseNum", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> giveOrganisersHouseNumber(@RequestParam("houseNum") String houseNum,
+	@RequestMapping(value = "/sendHouseNum", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendOrganisersHouseNumber(@RequestParam("houseNum") String houseNum,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto=new InnerDTO();
 		innerDto.setHouseNum(houseNum);
 		innerDto.setMail(mail);
-		return service.giveOrganisersHouseNumber(innerDto);
+		return service.saveOrganisersHouseNumber(innerDto);
 	}
 
 	// Get organizer's fullname
-	@RequestMapping(value = "/giveContactName", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> getContactName(@RequestParam("fullName") String contName,
+	@RequestMapping(value = "/sendContactName", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendContactName(@RequestParam("fullName") String contName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto=new InnerDTO();
 		innerDto.setContName(contName);
 		innerDto.setMail(mail);
-		return service.giveContactName(innerDto);
+		return service.saveContactName(innerDto);
 	}
 
 	// Get additional comment from contact
-	@RequestMapping(value = "/giveGetContactComment", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> giveContactsComment(@RequestParam("comment") String comment,
+	@RequestMapping(value = "/sendGetContactComment", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendContactsComment(@RequestParam("comment") String comment,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto=new InnerDTO();
 		innerDto.setComment(comment);
 		innerDto.setMail(mail);
-		return service.giveContactsComment(innerDto);
+		return service.saveContactsComment(innerDto);
 	}
 
 	// Validate checksum that sent in e-mail
@@ -111,11 +111,9 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	// Send e-mail to user with checksum and store user by its e-mail
-	@RequestMapping(value = "/giveMail", method = RequestMethod.GET)
-	public ResponseEntity<AttributeDTO> sendingMail(@RequestParam("mail") String mail,
+	@RequestMapping(value = "/validateMail", method = RequestMethod.GET)
+	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,
 			@RequestParam("isCorrect") String isCorrect) {
-		return service.validateMailAddress(mail);
-	}
 		MailValidationDTO mailDto=new MailValidationDTO(mail, "Email verifikáció", "checkSum");
 		return service.validateMailAddress(mailDto);
 	}
