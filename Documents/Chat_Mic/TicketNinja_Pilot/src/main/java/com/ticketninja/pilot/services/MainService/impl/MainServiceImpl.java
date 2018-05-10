@@ -154,28 +154,4 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
-	
-
-	// In progress
-//	public ResponseEntity<AttributeDTO> sendingMimeMail(String mail, String isCorrect) {
-//		try {
-//			userDao.getUserByEmail(mail);
-//			isCorrect = StatusCode.ALREADYFOUNDMAILADDRESS;
-//		} catch (EmailNotFoundException e) {
-//			try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("Spring.xml")) {
-//				EmailServiceImpl m = (EmailServiceImpl) context.getBean("mailService");
-//				UserInfo uInfo = new UserInfo(mail);
-//				userDao.saveUser(uInfo);
-//				m.sendMail(uInfo.getMail(), uInfo.getCheckS());
-//				isCorrect = StatusCode.OK;
-//			}
-//		} catch (Exception e) {
-//			LOGGER.log(Level.ALL, e.getMessage(), e);
-//		} finally {
-//			attDto.addAttribute(isCorrect);
-//		}
-//
-//		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
-//
-//	}
 }

@@ -25,18 +25,9 @@ public class RequestControllerImpl implements IRequestController {
 	EmailServiceImpl mailService;
 	@Autowired
 	ResourceLoader loader;
-	
-	@RequestMapping(value = "/testHtmlMail", method = RequestMethod.GET)
-	public String testHtmlMail() {
-		MailValidationDTO mailDto=new MailValidationDTO("Nardelotti97@gmail.com", "Email verifikáció", "checkSum");
-		Resource resource=loader.getResource("classpath:static/htmlmailHUN.html");
-		mailDto.setResource(resource);
-		mailDto.setChangeToken("$");
-		mailService.sendHtmlMail(mailDto);
-		return "We sent you a mail.";
-	}
 
 	// Get organization name
+	
 	@RequestMapping(value = "/sendOrgName", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> sendOrganizationName(@RequestParam("orgName") String orgName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
@@ -58,8 +49,8 @@ public class RequestControllerImpl implements IRequestController {
 
 	// Get organizer's settlement
 	@RequestMapping(value = "/sendSettlement", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendOrganisersSettlement(@RequestParam("settlement") String settlement,
-			@RequestParam("isCorrect") String isCorrect, @RequestParam("mail") String mail) {
+	public ResponseEntity<AttributeDTO> sendOrganisersSettlement(@RequestParam("settlement") String settlement, @RequestParam("mail") String mail,
+			@RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setOrgSettlement(settlement);
 		innerDto.setMail(mail);
@@ -88,7 +79,7 @@ public class RequestControllerImpl implements IRequestController {
 
 	// Get organizer's fullname
 	@RequestMapping(value = "/sendContactName", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendContactName(@RequestParam("fullName") String contName,
+	public ResponseEntity<AttributeDTO> sendContactName(@RequestParam("contName") String contName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setContName(contName);
@@ -97,8 +88,8 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	// Get additional comment from contact
-	@RequestMapping(value = "/sendGetContactComment", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendContactsComment(@RequestParam("comment") String comment,
+	@RequestMapping(value = "/sendComment", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendComment(@RequestParam("comment") String comment,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setComment(comment);
@@ -115,22 +106,21 @@ public class RequestControllerImpl implements IRequestController {
 		innerDto.setMail(mail);
 		return service.validateCheckSum(innerDto);
 	}
-
+	
 	// Send e-mail to user with checksum and store user by its e-mail
 	@RequestMapping(value = "/validateMail", method = RequestMethod.GET)
-	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,
+	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,  @RequestParam("lang") String lang,
 			@RequestParam("isCorrect") String isCorrect) {
-		MailValidationDTO mailDto = new MailValidationDTO(mail, "Email verifikáció", "checkSum");
-		return mailService.validateMailAddress(mailDto);
+		MailValidationDTO mailDto=new MailValidationDTO(mail, "Email verifikáció", "checkSum");
+		Resource resource=loader.getResource("classpath:static/htmlmailHUN.html");
+		if(lang.compareTo("eng")==0) {
+			mailDto=new MailValidationDTO(mail, "Email verification", "checkSum");
+			resource=loader.getResource("classpath:static/htmlmailENG.html");
+		}
+			mailDto.setResource(resource);
+			mailDto.setChangeToken("$");
+		
+		return mailService.validateHtmlMailAddress(mailDto);
 	}
-
-	// Send HTML e-mail to user with checksum and store user by its e-mail
-	// @RequestMapping(value = "/giveGetMimeMail", method = RequestMethod.GET,
-	// produces = "application/json")
-	// public ResponseEntity<AttributeDTO> sendingMimeMail(@RequestParam("mail")
-	// String mail,
-	// @RequestParam("isCorrect") String isCorrect) {
-	// return service.sendingMimeMail(mail);
-	// }
 
 }

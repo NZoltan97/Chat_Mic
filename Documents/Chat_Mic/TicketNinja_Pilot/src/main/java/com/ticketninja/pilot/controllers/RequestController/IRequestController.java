@@ -25,15 +25,12 @@ public interface IRequestController {
 	public ResponseEntity<AttributeDTO> sendContactName(@RequestParam("fullName") String fullName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
-	public ResponseEntity<AttributeDTO> sendContactsComment(@RequestParam("comment") String comment,
+	public ResponseEntity<AttributeDTO> sendComment(@RequestParam("comment") String comment,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
 	public ResponseEntity<AttributeDTO> validateCheckSum(@RequestParam("checkSum") String checkSumFromUser,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
 	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,
-			@RequestParam("isCorrect") String isCorrect);
-
-//	public ResponseEntity<AttributeDTO> sendingMimeMail(@RequestParam("mail") String mail,
-//			@RequestParam("isCorrect") String isCorrect);
+			@RequestParam("isCorrect") String isCorrect, @RequestParam("lang") String lang);
 }

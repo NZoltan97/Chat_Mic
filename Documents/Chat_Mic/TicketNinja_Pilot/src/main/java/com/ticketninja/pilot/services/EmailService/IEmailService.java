@@ -9,5 +9,5 @@ public interface IEmailService {
 	
 	public void sendMail(MailValidationDTO dto);
 	public ResponseEntity<AttributeDTO> validateMailAddress(MailValidationDTO mailDto);
-	//public void sendHtmlEmail(String to, String msg);
+	public ResponseEntity<AttributeDTO> validateHtmlMailAddress(MailValidationDTO mailDto);
 }
