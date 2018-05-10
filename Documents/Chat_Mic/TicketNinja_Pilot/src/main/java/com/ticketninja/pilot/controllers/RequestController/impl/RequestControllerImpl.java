@@ -29,7 +29,7 @@ public class RequestControllerImpl implements IRequestController {
 	@RequestMapping(value = "/testHtmlMail", method = RequestMethod.GET)
 	public String testHtmlMail() {
 		MailValidationDTO mailDto=new MailValidationDTO("Nardelotti97@gmail.com", "Email verifikáció", "checkSum");
-		Resource resource=loader.getResource("classpath:static/htmlmail.html");
+		Resource resource=loader.getResource("classpath:static/htmlmailHUN.html");
 		mailDto.setResource(resource);
 		mailDto.setChangeToken("$");
 		mailService.sendHtmlMail(mailDto);
