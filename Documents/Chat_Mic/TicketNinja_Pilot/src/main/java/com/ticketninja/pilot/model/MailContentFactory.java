@@ -10,5 +10,14 @@ public class MailContentFactory {
 		content.setTo(dto.getTo());
 		content.setParameters(dto.getParameters());
 		return content;
-	}	
+	}
+	
+	public VerificationHtmlMailContent createVerificationHtmlMailContent(MailValidationDTO dto) {
+		VerificationHtmlMailContent content=new VerificationHtmlMailContent();
+		content.setSubject(dto.getSubject());
+		content.setTo(dto.getTo());
+		content.setParameters(dto.getParameters());
+		content.createHtmlContent(dto.getResource(), dto.getChangeToken());
+		return content;
+	}
 }

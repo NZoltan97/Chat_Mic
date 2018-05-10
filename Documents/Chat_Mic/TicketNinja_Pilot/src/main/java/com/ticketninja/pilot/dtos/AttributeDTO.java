@@ -7,10 +7,16 @@ public class AttributeDTO {
 	@JsonProperty("set_attributes")
 	private AttributeName name;
 	
+
 	public AttributeDTO() {
 		
 	}
-
+	
+	public void setName(AttributeName name) {
+		this.name=name;
+	}
+	
+	
 	public AttributeName getName() {
 		return name;
 	}

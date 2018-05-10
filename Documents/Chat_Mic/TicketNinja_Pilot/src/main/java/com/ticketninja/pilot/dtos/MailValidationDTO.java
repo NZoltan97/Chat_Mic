@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import org.springframework.core.io.Resource;
+
 public class MailValidationDTO {
 
 	private String to;
 	private String subject;
 	private int checkSum;
 	private Map<String, Object> parameters;
+	private Resource resource;
+	private String changeToken;
 	
 	public MailValidationDTO(String to, String subject, String key) {
 		this.to = to;
@@ -25,6 +29,23 @@ public class MailValidationDTO {
 	public void setTo(String to) {
 		this.to = to;
 	}
+
+	public Resource getResource() {
+		return resource;
+	}
+
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+
+	public String getChangeToken() {
+		return changeToken;
+	}
+
+	public void setChangeToken(String changeToken) {
+		this.changeToken = changeToken;
+	}
+
 	public String getSubject() {
 		return subject;
 	}
