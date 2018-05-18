@@ -19,6 +19,7 @@ public class VerificationHtmlMailContent {
 	private String from = "uniteamsze@gmail.com";
 	private String subject;
 	private Map<String, Object> parameters;
+	private String cssContent;
 	private String htmlContent;
 
 	public String getTo() {
@@ -36,8 +37,14 @@ public class VerificationHtmlMailContent {
 	public void setFrom(String from) {
 		this.from = from;
 	}
-	
-	
+
+	public String getCssContent() {
+		return cssContent;
+	}
+
+	public void setCssContent(String cssContent) {
+		this.cssContent = cssContent;
+	}
 
 	public String getHtmlContent() {
 		return htmlContent;
@@ -62,8 +69,24 @@ public class VerificationHtmlMailContent {
 	public void setParameters(Map<String, Object> parameters) {
 		this.parameters = parameters;
 	}
+	
+	public String addCssContent(Resource cssResource, String changeTokenCss) {
+		StringBuilder sb = new StringBuilder();
+		String temp = new String();
+		try {
+			BufferedReader cssFileContent=new BufferedReader(new InputStreamReader(cssResource.getInputStream()));
+			while ((temp = cssFileContent.readLine()) != null) {
+					sb.append(temp);
+			}
+			cssFileContent.close();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		cssContent = sb.toString();
+		return cssContent;
+	}
 
-	public String createHtmlContent(Resource resource, String changeToken) {
+	public String createHtmlContent(Resource htmlResource, String changeTokenHtml, Resource cssResource, String changeTokenCss) {
 		StringBuilder sb = new StringBuilder();
 		String temp = new String();
 		ArrayList<String> params=new ArrayList<String>();
@@ -72,22 +95,25 @@ public class VerificationHtmlMailContent {
 			params.add(e.getValue().toString());
 		}
 		try {
-			BufferedReader fileContent = new BufferedReader(new InputStreamReader(resource.getInputStream()));
-			while ((temp = fileContent.readLine()) != null) {
-				if (temp.contains(changeToken)) {
-					sb.append(temp.replace(changeToken, params.get(paramIndex)));
-				} else {
+			BufferedReader htmlFileContent = new BufferedReader(new InputStreamReader(htmlResource.getInputStream()));
+			while ((temp = htmlFileContent.readLine()) != null) {
+				if (temp.contains(changeTokenCss)) {
+					sb.append(addCssContent(cssResource, changeTokenCss));
+				}else if(temp.contains(changeTokenHtml)) {
+					sb.append(temp.replace(changeTokenHtml, params.get(paramIndex)));
+				}
+				else {
 					sb.append(temp);
 				}
 			}
-			fileContent.close();
+			htmlFileContent.close();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 		htmlContent = sb.toString();
 		return htmlContent;
 	}
-	public MimeMessage getMimeMessage(JavaMailSender mailSender) {
+	public MimeMessage getMimeMessage(JavaMailSender mailSender, Resource logoResource, Resource backgroundResource) {
 		MimeMessage message = mailSender.createMimeMessage();
 		try {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -95,6 +121,8 @@ public class VerificationHtmlMailContent {
 		helper.setFrom(from);
 		helper.setSubject(subject);
 		helper.setText(htmlContent, true);
+		helper.addInline("ninjaLogo", logoResource);
+		helper.addInline("ninjaBackground",backgroundResource);
 		}catch(MessagingException e) {
 			System.out.println("Hiba!");
 		}

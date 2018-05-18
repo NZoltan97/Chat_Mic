@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.springframework.core.io.Resource;
+import org.springframework.mail.javamail.JavaMailSender;
 
 public class MailValidationDTO {
 
@@ -12,16 +13,44 @@ public class MailValidationDTO {
 	private String subject;
 	private int checkSum;
 	private Map<String, Object> parameters;
-	private Resource resource;
-	private String changeToken;
+	private Resource htmlResource;
+	private String changeTokenHtml;
+	private String changeTokenCss;
+	private Resource logoResource;
+	private Resource cssResource;
+	private JavaMailSender mailSender;
+	private Resource backgroundResource;
 	
-	public MailValidationDTO(String to, String subject, String key) {
+	public MailValidationDTO(String to, String subject) {
 		this.to = to;
 		this.subject = subject;
 		parameters=new HashMap<String, Object>();
-		addParameter(key,setCheckS());
 	}
 	
+	public JavaMailSender getMailSender() {
+		return mailSender;
+	}
+
+
+
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+
+
+
+	public Resource getBackgroundResource() {
+		return backgroundResource;
+	}
+
+
+
+	public void setBackgroundResource(Resource backgroundResource) {
+		this.backgroundResource = backgroundResource;
+	}
+
+
+
 	public String getTo() {
 		return to;
 	}
@@ -30,20 +59,45 @@ public class MailValidationDTO {
 		this.to = to;
 	}
 
-	public Resource getResource() {
-		return resource;
+	public Resource getHtmlResource() {
+		return htmlResource;
 	}
 
-	public void setResource(Resource resource) {
-		this.resource = resource;
+	public void setHtmlResource(Resource htmlResource) {
+		this.htmlResource = htmlResource;
 	}
 
-	public String getChangeToken() {
-		return changeToken;
+	
+	public Resource getCssResource() {
+		return cssResource;
 	}
 
-	public void setChangeToken(String changeToken) {
-		this.changeToken = changeToken;
+	public void setCssResource(Resource cssResource) {
+		this.cssResource = cssResource;
+	}
+
+	public Resource getLogoResource() {
+		return logoResource;
+	}
+
+	public void setLogoResource(Resource logoResource) {
+		this.logoResource = logoResource;
+	}
+
+	public String getChangeTokenHtml() {
+		return changeTokenHtml;
+	}
+
+	public void setChangeTokenHtml(String changeTokenHtml) {
+		this.changeTokenHtml = changeTokenHtml;
+	}
+	
+	public String getChangeTokenCss() {
+		return changeTokenCss;
+	}
+
+	public void setChangeTokenCss(String changeTokenCss) {
+		this.changeTokenCss = changeTokenCss;
 	}
 
 	public String getSubject() {
@@ -66,7 +120,7 @@ public class MailValidationDTO {
 		return checkSum;
 	}
 	
-	private int setCheckS() {
+	public int setCheckS() {
 		Random rnd = new Random();
 		this.checkSum = (rnd.nextInt(8999) + 1000);
 		return (Integer)this.checkSum;

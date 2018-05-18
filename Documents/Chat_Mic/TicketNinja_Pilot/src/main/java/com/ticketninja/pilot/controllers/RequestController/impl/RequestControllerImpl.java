@@ -111,14 +111,22 @@ public class RequestControllerImpl implements IRequestController {
 	@RequestMapping(value = "/validateMail", method = RequestMethod.GET)
 	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,  @RequestParam("lang") String lang,
 			@RequestParam("isCorrect") String isCorrect) {
-		MailValidationDTO mailDto=new MailValidationDTO(mail, "Email verifikáció", "checkSum");
-		Resource resource=loader.getResource("classpath:static/htmlmailHUN.html");
+		MailValidationDTO mailDto=new MailValidationDTO(mail, "Email verifikáció");
+		Resource htmlResource=loader.getResource("classpath:static/htmlmailHUN.html");
 		if(lang.compareTo("eng")==0) {
-			mailDto=new MailValidationDTO(mail, "Email verification", "checkSum");
-			resource=loader.getResource("classpath:static/htmlmailENG.html");
+			mailDto=new MailValidationDTO(mail, "Email verification");
+			htmlResource=loader.getResource("classpath:static/htmlmailENG.html");
 		}
-			mailDto.setResource(resource);
-			mailDto.setChangeToken("$");
+			Resource cssResource=loader.getResource("classpath:static/appearence.css");
+			Resource logoResource=loader.getResource("classpath:static/ninja_logo.png");
+			Resource backgroundResource=loader.getResource("classpath:static/backgroundv5.png");
+			mailDto.addParameter("checkSum", mailDto.setCheckS());
+			mailDto.setBackgroundResource(backgroundResource);
+			mailDto.setHtmlResource(htmlResource);
+			mailDto.setCssResource(cssResource);
+			mailDto.setLogoResource(logoResource);
+			mailDto.setChangeTokenCss("<css>");
+			mailDto.setChangeTokenHtml("<params>");
 		
 		return mailService.validateHtmlMailAddress(mailDto);
 	}

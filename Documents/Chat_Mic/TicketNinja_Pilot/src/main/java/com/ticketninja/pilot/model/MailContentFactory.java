@@ -17,7 +17,7 @@ public class MailContentFactory {
 		content.setSubject(dto.getSubject());
 		content.setTo(dto.getTo());
 		content.setParameters(dto.getParameters());
-		content.createHtmlContent(dto.getResource(), dto.getChangeToken());
+		content.createHtmlContent(dto.getHtmlResource(), dto.getChangeTokenHtml(), dto.getCssResource(), dto.getChangeTokenCss());
 		return content;
 	}
 }
