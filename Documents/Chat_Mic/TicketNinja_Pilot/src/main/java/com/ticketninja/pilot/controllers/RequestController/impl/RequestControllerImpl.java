@@ -96,6 +96,26 @@ public class RequestControllerImpl implements IRequestController {
 		innerDto.setMail(mail);
 		return service.saveContactsComment(innerDto);
 	}
+	
+	// Get the event's name
+	@RequestMapping(value = "/sendEventName", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendEventName(@RequestParam("eventName") String eventName,
+			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
+		InnerDTO innerDto = new InnerDTO();
+		innerDto.setEventName(eventName);
+		innerDto.setMail(mail);
+		return service.saveEventName(innerDto);
+	}
+	
+	// Get the event's starting date
+		@RequestMapping(value = "/sendDate", method = RequestMethod.GET, produces = "application/json")
+		public ResponseEntity<AttributeDTO> sendDate(@RequestParam("date") String date,
+				@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
+			InnerDTO innerDto = new InnerDTO();
+			innerDto.setEventName(date);
+			innerDto.setMail(mail);
+			return service.saveEventName(innerDto);
+		}
 
 	// Validate checksum that sent in e-mail
 	@RequestMapping(value = "/validateCheckSum", method = RequestMethod.GET)

@@ -14,7 +14,9 @@ public enum Status {
 	 INVALIDCOMMENT(10, "Invalid comment"),
 	 MAILADDRESSNOTFOUND(11, "Cannot found e-mail address"),
 	 USERIDNOTFOUND(12, "Cannot found user"),
-	 INVALIDMAILCONTENT(13, "Invalid mail content");
+	 INVALIDMAILCONTENT(13, "Invalid mail content"),
+	 INVALIDEVENTNAME(14, "Invalid event name"),
+	 INVALIDDATE(15, "Invalid date");
 
      private final int code;
      private final String description;

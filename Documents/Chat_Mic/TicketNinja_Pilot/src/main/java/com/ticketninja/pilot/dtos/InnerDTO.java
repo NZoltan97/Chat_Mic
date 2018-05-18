@@ -1,5 +1,6 @@
 package com.ticketninja.pilot.dtos;
 
+import java.util.Date;
 
 public class InnerDTO {
 	
@@ -16,6 +17,10 @@ public class InnerDTO {
 	private String houseNum;
 
 	private String zipCode;	
+	
+	private String eventName;
+	
+	private Date date;
 	
 	private String checkSum;
 	
@@ -92,6 +97,22 @@ public class InnerDTO {
 
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
+	}
+	
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+	
+	public String getEventName() {
+		return eventName;
+	}
+	
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	public Date getDate() {
+		return date;
 	}
 
 	public String getCheckSum() {

@@ -1,6 +1,7 @@
 package com.ticketninja.pilot.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "users")
@@ -41,6 +41,12 @@ public class UserInfo implements Serializable{
 
 	@Column(name="zipCode")
 	private String zipCode;
+	
+	@Column(name="eventName")
+	private String eventName;
+	
+	@Column(name="date")
+	private Date date;
 
 	@Column(name="checkSum")
 	private int checkSum;
@@ -131,7 +137,23 @@ public class UserInfo implements Serializable{
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-
+	
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+	
+	public String getEventName() {
+		return eventName;
+	}
+	
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+	
 	public int getCheckSum() {
 		return checkSum;
 	}
@@ -147,7 +169,5 @@ public class UserInfo implements Serializable{
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-	
 
 }

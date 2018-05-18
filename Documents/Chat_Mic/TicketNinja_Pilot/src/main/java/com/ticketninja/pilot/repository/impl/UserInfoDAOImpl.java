@@ -1,5 +1,6 @@
 package com.ticketninja.pilot.repository.impl;
 
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -95,6 +96,18 @@ public class UserInfoDAOImpl {
 	public void setZipCode(String zipCode, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
 		userFromDB.setZipCode(zipCode);
+		saveUser(userFromDB);
+	}
+	
+	public void setEventName(String eventName, String mail) throws ValidatorException {
+		UserInfo userFromDB = getUserByEmail(mail);
+		userFromDB.setEventName(eventName);
+		saveUser(userFromDB);
+	}
+	
+	public void setDate(Date date, String mail) throws ValidatorException {
+		UserInfo userFromDB = getUserByEmail(mail);
+		userFromDB.setDate(date);
 		saveUser(userFromDB);
 	}
 
