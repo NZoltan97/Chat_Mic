@@ -27,6 +27,12 @@ public interface IRequestController {
 
 	public ResponseEntity<AttributeDTO> sendComment(@RequestParam("comment") String comment,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
+	
+	public ResponseEntity<AttributeDTO> sendEventName(@RequestParam("eventName") String eventName,
+			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
+	
+	public ResponseEntity<AttributeDTO> sendDate(@RequestParam("date") String date,
+			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
 	public ResponseEntity<AttributeDTO> validateCheckSum(@RequestParam("checkSum") String checkSumFromUser,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);

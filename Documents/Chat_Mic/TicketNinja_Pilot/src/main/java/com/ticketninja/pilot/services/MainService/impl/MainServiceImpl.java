@@ -121,6 +121,34 @@ public class MainServiceImpl implements IMainService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
+	
+	public ResponseEntity<AttributeDTO> saveEventName(InnerDTO innerDto) {
+		int isCorrect = 0;
+		try {
+			validator.validateEventName(innerDto.getEventName());
+			userDao.setEventName(innerDto.getEventName(), innerDto.getMail());
+			isCorrect = Status.OK.code();
+		} catch (ValidatorException e) {
+			isCorrect = e.getStatus().code();
+			LOGGER.log(Level.ALL, e.getStatus().description(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+	}
+	
+	public ResponseEntity<AttributeDTO> saveDate(InnerDTO innerDto) {
+		int isCorrect = 0;
+		try {
+			validator.validateDate(innerDto.getDate());
+			userDao.setDate(innerDto.getDate(), innerDto.getMail());
+			isCorrect = Status.OK.code();
+		} catch (ValidatorException e) {
+			isCorrect = e.getStatus().code();
+			LOGGER.log(Level.ALL, e.getStatus().description(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+	}
 
 	public ResponseEntity<AttributeDTO> saveContactsComment(InnerDTO innerDto) {
 		int isCorrect = 0;
