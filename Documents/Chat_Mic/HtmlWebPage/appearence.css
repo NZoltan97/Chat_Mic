@@ -1,12 +1,11 @@
 .description{
 	text-align: center;
-	font-size: 20px;
-	width: 875px;
-	height:490px;
+	min-height: inherit;
+	font-size: 25px;
 	border-right: solid rgba(54,53,130,2.00) 1px;
 	border-top: solid rgba(54,53,130,2.00) 2px;
 	border-left: solid rgba(54,53,130,2.00) 1px;
-	background-image: url(cid:ninjaBackground);
+	background-image: url(background.png);
 }
 
 .ninjaImg{
@@ -21,13 +20,13 @@ p{
 .title{
 	margin-top:5%;
 	color: rgba(255,255,255,1.00);
-	font-size: 25px;
+	font-size: 30px;
 }
 
 .code{
 	color: rgba(255,255,255,1.00);
 	font-weight:bold;
-	font-size: 30px;
+	font-size: 20px;
 }
 .header{
 	background-color: rgba(249,248,254,1.00); 
@@ -38,7 +37,7 @@ p{
 
 .headerTitle{
 	margin-left:13%;
-	font-size: 35px;
+	font-size: 40px;
 }
 
 footer{
@@ -47,5 +46,5 @@ footer{
 	font-size:15px;
 	background-color:rgba(231,23,96,1.00);
 	color: rgba(255,255,255,1.00);
-	margin-top:17%;
+	margin-top:25%;
 }
