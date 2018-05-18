@@ -134,6 +134,7 @@ public class MainServiceImpl implements IMainService {
 		} finally {
 			attDto.addAttribute(isCorrect);
 		}
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 	
 	public ResponseEntity<AttributeDTO> saveDate(InnerDTO innerDto) {
@@ -148,6 +149,7 @@ public class MainServiceImpl implements IMainService {
 		} finally {
 			attDto.addAttribute(isCorrect);
 		}
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 
 	public ResponseEntity<AttributeDTO> saveContactsComment(InnerDTO innerDto) {

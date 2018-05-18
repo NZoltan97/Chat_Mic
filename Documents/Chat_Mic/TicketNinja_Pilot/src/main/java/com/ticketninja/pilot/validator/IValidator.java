@@ -13,4 +13,6 @@ public interface IValidator {
 	public void validateHnumber(String s) throws ValidatorException;
 	public void validateName(String s) throws ValidatorException;
 	public void validateComment(String comment) throws ValidatorException;
+	public void validateEventName(String s) throws ValidatorException;
+	public void validateDate(String date) throws ValidatorException;
 }

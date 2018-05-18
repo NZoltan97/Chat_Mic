@@ -112,9 +112,9 @@ public class RequestControllerImpl implements IRequestController {
 		public ResponseEntity<AttributeDTO> sendDate(@RequestParam("date") String date,
 				@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 			InnerDTO innerDto = new InnerDTO();
-			innerDto.setEventName(date);
+			innerDto.setDate(date);
 			innerDto.setMail(mail);
-			return service.saveEventName(innerDto);
+			return service.saveDate(innerDto);
 		}
 
 	// Validate checksum that sent in e-mail
