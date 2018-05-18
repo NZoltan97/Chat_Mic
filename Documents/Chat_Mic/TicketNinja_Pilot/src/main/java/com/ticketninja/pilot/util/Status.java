@@ -16,7 +16,9 @@ public enum Status {
 	 USERIDNOTFOUND(12, "Cannot found user"),
 	 INVALIDMAILCONTENT(13, "Invalid mail content"),
 	 INVALIDEVENTNAME(14, "Invalid event name"),
-	 INVALIDDATE(15, "Invalid date");
+	 INVALIDDATE(15, "Invalid date"),
+	 FILENOTFOUND(16, "File not found");
+	
 
      private final int code;
      private final String description;

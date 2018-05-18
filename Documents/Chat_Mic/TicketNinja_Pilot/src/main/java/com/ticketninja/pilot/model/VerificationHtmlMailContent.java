@@ -13,6 +13,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import com.ticketninja.pilot.exceptions.ValidatorException;
+import com.ticketninja.pilot.util.Status;
+
 
 public class VerificationHtmlMailContent {
 	private String to;
@@ -86,7 +89,7 @@ public class VerificationHtmlMailContent {
 		return cssContent;
 	}
 
-	public String createHtmlContent(Resource htmlResource, String changeTokenHtml, Resource cssResource, String changeTokenCss) {
+	public String createHtmlContent(Resource htmlResource, String changeTokenHtml, Resource cssResource, String changeTokenCss) throws ValidatorException {
 		StringBuilder sb = new StringBuilder();
 		String temp = new String();
 		ArrayList<String> params=new ArrayList<String>();
@@ -108,12 +111,13 @@ public class VerificationHtmlMailContent {
 			}
 			htmlFileContent.close();
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			throw new ValidatorException(Status.FILENOTFOUND);
 		}
 		htmlContent = sb.toString();
 		return htmlContent;
 	}
-	public MimeMessage getMimeMessage(JavaMailSender mailSender, Resource logoResource, Resource backgroundResource) {
+	
+	public MimeMessage getMimeMessage(JavaMailSender mailSender, Resource logoResource, Resource backgroundResource) throws ValidatorException {
 		MimeMessage message = mailSender.createMimeMessage();
 		try {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -124,7 +128,7 @@ public class VerificationHtmlMailContent {
 		helper.addInline("ninjaLogo", logoResource);
 		helper.addInline("ninjaBackground",backgroundResource);
 		}catch(MessagingException e) {
-			System.out.println("Hiba!");
+			throw new ValidatorException(Status.INVALIDMAILCONTENT);
 		}
 		return message;
 	}
