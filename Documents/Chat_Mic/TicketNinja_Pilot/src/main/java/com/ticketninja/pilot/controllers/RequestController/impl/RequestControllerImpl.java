@@ -79,10 +79,10 @@ public class RequestControllerImpl implements IRequestController {
 
 	// Get organizer's fullname
 	@RequestMapping(value = "/sendContactName", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendContactName(@RequestParam("contName") String contName,
+	public ResponseEntity<AttributeDTO> sendContactName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setContName(contName);
+		innerDto.setContName(firstName+lastName);
 		innerDto.setMail(mail);
 		return service.saveContactName(innerDto);
 	}
@@ -98,24 +98,24 @@ public class RequestControllerImpl implements IRequestController {
 	}
 	
 	// Get the event's name
-	@RequestMapping(value = "/sendEventName", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendEventName(@RequestParam("eventName") String eventName,
-			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
-		InnerDTO innerDto = new InnerDTO();
-		innerDto.setEventName(eventName);
-		innerDto.setMail(mail);
-		return service.saveEventName(innerDto);
-	}
-	
-	// Get the event's starting date
-		@RequestMapping(value = "/sendDate", method = RequestMethod.GET, produces = "application/json")
-		public ResponseEntity<AttributeDTO> sendDate(@RequestParam("date") String date,
+		@RequestMapping(value = "/sendEventName", method = RequestMethod.GET, produces = "application/json")
+		public ResponseEntity<AttributeDTO> sendEventName(@RequestParam("eventName") String eventName,
 				@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 			InnerDTO innerDto = new InnerDTO();
-			innerDto.setDate(date);
+			innerDto.setEventName(eventName);
 			innerDto.setMail(mail);
-			return service.saveDate(innerDto);
+			return service.saveEventName(innerDto);
 		}
+		
+		// Get the event's starting date
+			@RequestMapping(value = "/sendDate", method = RequestMethod.GET, produces = "application/json")
+			public ResponseEntity<AttributeDTO> sendDate(@RequestParam("date") String date,
+					@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
+				InnerDTO innerDto = new InnerDTO();
+				innerDto.setDate(date);
+				innerDto.setMail(mail);
+				return service.saveDate(innerDto);
+			}
 
 	// Validate checksum that sent in e-mail
 	@RequestMapping(value = "/validateCheckSum", method = RequestMethod.GET)
