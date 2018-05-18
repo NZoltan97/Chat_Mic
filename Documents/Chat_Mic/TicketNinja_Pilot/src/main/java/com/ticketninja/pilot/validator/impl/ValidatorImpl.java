@@ -1,5 +1,8 @@
 package com.ticketninja.pilot.validator.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.web.util.HtmlUtils;
 
 import com.ticketninja.pilot.exceptions.ValidatorException;
@@ -11,11 +14,10 @@ public class ValidatorImpl implements IValidator {
 
 	public void validateCheckSum(String checkSumFromUser, UserInfo user) throws ValidatorException {
 		try {
-			int checkTemp=Integer.parseInt(checkSumFromUser);
+			int checkTemp = Integer.parseInt(checkSumFromUser);
 			if (checkSumFromUser.length() != 4 || checkSumFromUser.isEmpty()) {
 				throw new ValidatorException(Status.INVALIDCHECKSUM);
-			}
-			else if(checkTemp!=user.getCheckSum()) {
+			} else if (checkTemp != user.getCheckSum()) {
 				throw new ValidatorException(Status.INVALIDCHECKSUM);
 			}
 		} catch (NumberFormatException e) {
@@ -28,7 +30,7 @@ public class ValidatorImpl implements IValidator {
 			throw new ValidatorException(Status.INVALIDORGNAME);
 		}
 	}
-	
+
 	public void validateZip(String s) throws ValidatorException {
 		try {
 			Integer.parseInt(s);
@@ -66,15 +68,33 @@ public class ValidatorImpl implements IValidator {
 			throw new ValidatorException(Status.INVALIDNAME);
 		}
 	}
-	
+
 	public void validateComment(String comment) throws ValidatorException {
-		if(comment.isEmpty() || comment.length()>1000 || isHtml(comment)) {
+		if (comment.isEmpty() || comment.length() > 1000 || isHtml(comment)) {
 			throw new ValidatorException(Status.INVALIDCOMMENT);
 		}
 	}
 
+	public void validateEventName(String s) throws ValidatorException {
+		if (!(!s.isEmpty() || (s.length() >= 5 && s.length() <= 150) || !isHtml(s))) {
+			throw new ValidatorException(Status.INVALIDEVENTNAME);
+		}
+	}
+
+	public void validateDate(String date) throws ValidatorException {
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.mm.dd.");
+		try {
+			Date javaDate = dateformat.parse(date);
+			if (dateformat.parse(date).before(new Date())) {
+				throw new ValidatorException(Status.INVALIDDATE);
+			}
+		} catch (Exception e) {
+			throw new ValidatorException(Status.INVALIDDATE);
+		}
+	}
+
 	public void mailIsCleanFromXSS(String mail) throws ValidatorException {
-		if(mail==null || isHtml(mail)) {
+		if (mail == null || isHtml(mail)) {
 			throw new ValidatorException(Status.INVALIDMAILCONTENT);
 		}
 	}

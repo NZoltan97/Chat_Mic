@@ -1,7 +1,6 @@
 package com.ticketninja.pilot.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,7 +45,7 @@ public class UserInfo implements Serializable{
 	private String eventName;
 	
 	@Column(name="date")
-	private Date date;
+	private String date;
 
 	@Column(name="checkSum")
 	private int checkSum;
@@ -146,11 +145,11 @@ public class UserInfo implements Serializable{
 		return eventName;
 	}
 	
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 	
