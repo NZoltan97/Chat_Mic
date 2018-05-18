@@ -47,13 +47,8 @@ public class EmailServiceImpl implements IEmailService {
 
 	public void sendHtmlMail(MailValidationDTO mailDto) {
 
-		try {
 		htmlContent = factory.createVerificationHtmlMailContent(mailDto);
 		mailSender.send(htmlContent.getMimeMessage(mailSender, mailDto.getLogoResource(),mailDto.getBackgroundResource()));
-		} catch (ValidatorException e) {
-			LOGGER.log(Level.ALL, e.getStatus().description(), e);
-			
-		}
 	}
 
 	public ResponseEntity<AttributeDTO> validateMailAddress(MailValidationDTO mailDto) {

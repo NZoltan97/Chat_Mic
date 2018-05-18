@@ -84,7 +84,7 @@ public class ValidatorImpl implements IValidator {
 	public void validateDate(String date) throws ValidatorException {
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.mm.dd.");
 		try {
-			Date javaDate = dateformat.parse(date);
+				dateformat.parse(date);
 			if (dateformat.parse(date).before(new Date())) {
 				throw new ValidatorException(Status.INVALIDDATE);
 			}
