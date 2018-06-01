@@ -1,5 +1,6 @@
 package com.ticketninja.pilot.validator.impl;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -81,16 +82,14 @@ public class ValidatorImpl implements IValidator {
 		}
 	}
 
-	public void validateDate(String date) throws ValidatorException {
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.mm.dd.");
+    public void validateDate(String date) throws ValidatorException {
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.MM.dd");
 		try {
-				dateformat.parse(date);
 			if (dateformat.parse(date).before(new Date())) {
-				throw new ValidatorException(Status.INVALIDDATE);
+				throw new ValidatorException(Status.INVALIDDATE);          
 			}
-		} catch (Exception e) {
-			throw new ValidatorException(Status.INVALIDDATE);
-		}
+		} catch (ParseException e) {
+			throw new ValidatorException(Status.INVALIDDATE);  		}
 	}
 
 	public void mailIsCleanFromXSS(String mail) throws ValidatorException {
