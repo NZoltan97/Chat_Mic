@@ -27,7 +27,7 @@ public class ValidatorImpl implements IValidator {
 	}
 
 	public void validateOrgName(String s) throws ValidatorException {
-		if (!(!s.isEmpty() || (s.length() >= 5 && s.length() <= 150) || !isHtml(s))) {
+		if (s.isEmpty() || !(s.length() >= 3 && s.length() <= 150) || isHtml(s)) {
 			throw new ValidatorException(Status.INVALIDORGNAME);
 		}
 	}
@@ -44,13 +44,13 @@ public class ValidatorImpl implements IValidator {
 	}
 
 	public void validateSettlement(String s) throws ValidatorException {
-		if (!(!s.isEmpty() || (s.length() >= 3 && s.length() <= 50) || !isHtml(s))) {
+		if (s.isEmpty() || !(s.length() >= 3 && s.length() <= 50) || isHtml(s)) {
 			throw new ValidatorException(Status.INVALIDSETTLEMENT);
 		}
 	}
 
 	public void validateStreet(String s) throws ValidatorException {
-		if (!(!s.isEmpty() || (s.length() >= 5 && s.length() <= 50) || !isHtml(s))) {
+		if (s.isEmpty() || !(s.length() >= 3 && s.length() <= 50) || isHtml(s)) {
 			throw new ValidatorException(Status.INVALIDSTREET);
 		}
 	}
@@ -65,33 +65,34 @@ public class ValidatorImpl implements IValidator {
 	}
 
 	public void validateName(String s) throws ValidatorException {
-		
-		if (s.isEmpty() || !(s.length()>=3 && s.length()<=30)||isHtml(s)) {
+
+		if (s.isEmpty() || !(s.length() >= 3 && s.length() <= 30) || isHtml(s)) {
 			throw new ValidatorException(Status.INVALIDNAME);
 		}
 	}
 
 	public void validateComment(String comment) throws ValidatorException {
-		if (comment.isEmpty() || comment.length() > 1000 || isHtml(comment)) {
+		if (comment.isEmpty() || !(comment.length() > 1000) || isHtml(comment)) {
 			throw new ValidatorException(Status.INVALIDCOMMENT);
 		}
 	}
 
 	public void validateEventName(String s) throws ValidatorException {
-		if (s.isEmpty() || !(s.length()>=3 && s.length()<=30) || isHtml(s)) {
+		if (s.isEmpty() || !(s.length() >= 3 && s.length() <= 30) || isHtml(s)) {
 			throw new ValidatorException(Status.INVALIDEVENTNAME);
 		}
 	}
 
-    public void validateDate(String date) throws ValidatorException {
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.MM.dd");
+	public void validateDate(String date) throws ValidatorException {
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.MM.dd.");
 		dateformat.setLenient(false);
 		try {
 			if (dateformat.parse(date).before(new Date())) {
-				throw new ValidatorException(Status.INVALIDDATE);          
+				throw new ValidatorException(Status.INVALIDDATE);
 			}
 		} catch (ParseException e) {
-			throw new ValidatorException(Status.INVALIDDATE);  		}
+			throw new ValidatorException(Status.INVALIDDATE);
+		}
 	}
 
 	public void mailIsCleanFromXSS(String mail) throws ValidatorException {
@@ -105,7 +106,7 @@ public class ValidatorImpl implements IValidator {
 	private boolean isHtml(String input) {
 		boolean isHtml = false;
 		if (input != null) {
-			if (!input.equals(HtmlUtils.htmlEscape(input,"UTF-8"))) {
+			if (!input.equals(HtmlUtils.htmlEscape(input, "UTF-8"))) {
 				isHtml = true;
 			}
 		}
