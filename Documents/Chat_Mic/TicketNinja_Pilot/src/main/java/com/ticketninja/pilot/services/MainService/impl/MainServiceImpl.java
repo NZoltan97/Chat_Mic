@@ -183,5 +183,19 @@ public class MainServiceImpl implements IMainService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
+	
+	public ResponseEntity<AttributeDTO> deleteUser(InnerDTO innerDto) {
+		int isCorrect = 0;
+		try {
+			userDao.delete(innerDto.getMail());
+			isCorrect=Status.OK.code();
+		} catch (ValidatorException e) {
+			isCorrect = e.getStatus().code();
+			LOGGER.log(Level.ALL, e.getStatus().description(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+	}
 
 }

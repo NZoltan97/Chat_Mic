@@ -13,6 +13,7 @@ import com.ticketninja.pilot.dtos.AttributeDTO;
 import com.ticketninja.pilot.dtos.MailValidationDTO;
 import com.ticketninja.pilot.exceptions.ValidatorException;
 import com.ticketninja.pilot.model.MailContentFactory;
+import com.ticketninja.pilot.model.SendGridMailService;
 import com.ticketninja.pilot.model.UserInfo;
 import com.ticketninja.pilot.model.VerificationHtmlMailContent;
 import com.ticketninja.pilot.model.VerificationMailContent;
@@ -86,4 +87,46 @@ public class EmailServiceImpl implements IEmailService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
+	
+	public  ResponseEntity<AttributeDTO> sendgridEmail(MailValidationDTO mailDto){
+		int isCorrect = 0;
+		try {
+			userDao.getUserByEmail(mailDto.getTo());
+			isCorrect = Status.ALREADYFOUNDMAILADDRESS.code();
+		} catch (ValidatorException e) {
+			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
+			userDao.saveUser(user);
+			SendGridMailService sendgridMailService=new SendGridMailService();
+			//sendgridMailService.activateTemplate();
+			sendgridMailService.buildSendgridMail(mailDto);
+			sendgridMailService.sendgridEmailSending();
+			isCorrect = Status.OK.code();
+		}catch (Exception e) {
+			LOGGER.log(Level.ALL, e.getMessage(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+	}
+	
+	/*
+	public ResponseEntity<AttributeDTO> sendAllDetailsToUser(MailValidationDTO mailDto) {
+		int isCorrect = 0;
+		try {
+			UserInfo user=userDao.getUserByEmail(mailDto.getTo());
+			sendHtmlMail(mailDto);
+			isCorrect = Status.OK.code();
+		} catch (ValidatorException e) {
+			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
+			userDao.saveUser(user);
+			
+			
+		} catch (Exception e) {
+			LOGGER.log(Level.ALL, e.getMessage(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+	}*/
+	
 }

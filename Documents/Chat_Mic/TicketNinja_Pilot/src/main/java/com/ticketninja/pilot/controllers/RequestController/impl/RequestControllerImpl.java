@@ -78,11 +78,20 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	// Get organizer's fullname
-	@RequestMapping(value = "/sendContactName", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendContactName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
+	@RequestMapping(value = "/sendContactNameFB", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendContactNameFB(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setContName(firstName+lastName);
+		innerDto.setMail(mail);
+		return service.saveContactName(innerDto);
+	}
+	
+	@RequestMapping(value = "/sendContactNameManual", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendContactNameManual(@RequestParam("contName") String contName,
+			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
+		InnerDTO innerDto = new InnerDTO();
+		innerDto.setContName(contName);
 		innerDto.setMail(mail);
 		return service.saveContactName(innerDto);
 	}
@@ -137,7 +146,7 @@ public class RequestControllerImpl implements IRequestController {
 			mailDto=new MailValidationDTO(mail, "Email verification");
 			htmlResource=loader.getResource("classpath:static/htmlmailENG.html");
 		}
-			Resource cssResource=loader.getResource("classpath:static/appearence.css");
+			Resource cssResource=loader.getResource("classpath:static/appearenceMail.css");
 			Resource logoResource=loader.getResource("classpath:static/ninja_logo.png");
 			Resource backgroundResource=loader.getResource("classpath:static/backgroundv5.png");
 			mailDto.addParameter("checkSum", mailDto.setCheckS());
@@ -150,5 +159,42 @@ public class RequestControllerImpl implements IRequestController {
 		
 		return mailService.validateHtmlMailAddress(mailDto);
 	}
+	
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> deleteUser(@RequestParam("mail") String mail) {
+		InnerDTO innerDto = new InnerDTO();
+		innerDto.setMail(mail);
+		return service.deleteUser(innerDto);
+	}
+	
+	@RequestMapping(value = "/sendGridMail", method = RequestMethod.GET)
+	public ResponseEntity<AttributeDTO>  sendGridMail(@RequestParam("mail") String mail){
+		MailValidationDTO mailDto=new MailValidationDTO(mail, "Email verifikáció");
+		return mailService.sendgridEmail(mailDto);
+	}
 
+	/*@RequestMapping(value = "/sendDetailsToUser", method = RequestMethod.GET)
+	public ResponseEntity<AttributeDTO> sendDetailsToUser(@RequestParam("mail") String mail,  @RequestParam("lang") String lang,
+			@RequestParam("isCorrect") String isCorrect) {
+		MailValidationDTO mailDto=new MailValidationDTO(mail, "Email verifikáció");
+		Resource htmlResource=loader.getResource("classpath:static/htmlmailHUN.html");
+		if(lang.compareTo("eng")==0) {
+			mailDto=new MailValidationDTO(mail, "Email verification");
+			htmlResource=loader.getResource("classpath:static/htmlmailENG.html");
+		}
+			Resource cssResource=loader.getResource("classpath:static/appearence.css");
+			Resource logoResource=loader.getResource("classpath:static/ninja_logo.png");
+			Resource backgroundResource=loader.getResource("classpath:static/backgroundv5.png");
+			mailDto.addParameter("checkSum", mailDto.setCheckS());
+			mailDto.setBackgroundResource(backgroundResource);
+			mailDto.setHtmlResource(htmlResource);
+			mailDto.setCssResource(cssResource);
+			mailDto.setLogoResource(logoResource);
+			mailDto.setChangeTokenCss("<css>");
+			mailDto.setChangeTokenHtml("<params>");
+		
+		return mailService.validateHtmlMailAddress(mailDto);
+	}*/
+
+	
 }

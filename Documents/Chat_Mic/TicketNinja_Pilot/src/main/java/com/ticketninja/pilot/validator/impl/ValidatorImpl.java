@@ -65,7 +65,8 @@ public class ValidatorImpl implements IValidator {
 	}
 
 	public void validateName(String s) throws ValidatorException {
-		if (!(!s.isEmpty() || (s.length() >= 3 && s.length() <= 12) || !isHtml(s))) {
+		
+		if (s.isEmpty() || !(s.length()>=3 && s.length()<=30)||isHtml(s)) {
 			throw new ValidatorException(Status.INVALIDNAME);
 		}
 	}
@@ -77,13 +78,14 @@ public class ValidatorImpl implements IValidator {
 	}
 
 	public void validateEventName(String s) throws ValidatorException {
-		if (!(!s.isEmpty() || (s.length() >= 5 && s.length() <= 150) || !isHtml(s))) {
+		if (s.isEmpty() || !(s.length()>=3 && s.length()<=30) || isHtml(s)) {
 			throw new ValidatorException(Status.INVALIDEVENTNAME);
 		}
 	}
 
     public void validateDate(String date) throws ValidatorException {
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.MM.dd");
+		dateformat.setLenient(false);
 		try {
 			if (dateformat.parse(date).before(new Date())) {
 				throw new ValidatorException(Status.INVALIDDATE);          
@@ -103,7 +105,7 @@ public class ValidatorImpl implements IValidator {
 	private boolean isHtml(String input) {
 		boolean isHtml = false;
 		if (input != null) {
-			if (!input.equals(HtmlUtils.htmlEscape(input))) {
+			if (!input.equals(HtmlUtils.htmlEscape(input,"UTF-8"))) {
 				isHtml = true;
 			}
 		}
