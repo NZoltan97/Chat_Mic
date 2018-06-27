@@ -106,7 +106,7 @@ public class UserInfoDAOImpl {
 	
 	public void setDate(String date, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
-		userFromDB.setDate(date);
+		userFromDB.setEventDate(date);
 		saveUser(userFromDB);
 	}
 

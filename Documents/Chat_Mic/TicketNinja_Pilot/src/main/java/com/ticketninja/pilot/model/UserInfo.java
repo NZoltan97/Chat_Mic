@@ -44,8 +44,8 @@ public class UserInfo implements Serializable{
 	@Column(name="eventName")
 	private String eventName;
 	
-	@Column(name="date")
-	private String date;
+	@Column(name="eventDate")
+	private String eventDate;
 
 	@Column(name="checkSum")
 	private int checkSum;
@@ -145,12 +145,12 @@ public class UserInfo implements Serializable{
 		return eventName;
 	}
 	
-	public void setDate(String date) {
-		this.date = date;
+	public void setEventDate(String eventDate) {
+		this.eventDate = eventDate;
 	}
 	
-	public String getDate() {
-		return date;
+	public String getEventDate() {
+		return eventDate;
 	}
 	
 	public int getCheckSum() {

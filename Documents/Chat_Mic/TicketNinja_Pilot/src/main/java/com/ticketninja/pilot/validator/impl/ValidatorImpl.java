@@ -72,7 +72,7 @@ public class ValidatorImpl implements IValidator {
 	}
 
 	public void validateComment(String comment) throws ValidatorException {
-		if (comment.isEmpty() || !(comment.length() > 1000) || isHtml(comment)) {
+		if (!(comment.length() < 1000) || isHtml(comment)) {
 			throw new ValidatorException(Status.INVALIDCOMMENT);
 		}
 	}
@@ -84,7 +84,7 @@ public class ValidatorImpl implements IValidator {
 	}
 
 	public void validateDate(String date) throws ValidatorException {
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.MM.dd.");
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy.MM.dd");
 		dateformat.setLenient(false);
 		try {
 			if (dateformat.parse(date).before(new Date())) {
@@ -92,12 +92,6 @@ public class ValidatorImpl implements IValidator {
 			}
 		} catch (ParseException e) {
 			throw new ValidatorException(Status.INVALIDDATE);
-		}
-	}
-
-	public void mailIsCleanFromXSS(String mail) throws ValidatorException {
-		if (mail == null || isHtml(mail)) {
-			throw new ValidatorException(Status.INVALIDMAILCONTENT);
 		}
 	}
 

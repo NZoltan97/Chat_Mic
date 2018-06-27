@@ -9,11 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.sendgrid.SendGrid;
+import com.sendgrid.SendGridException;
 import com.ticketninja.pilot.dtos.AttributeDTO;
-import com.ticketninja.pilot.dtos.MailValidationDTO;
+import com.ticketninja.pilot.dtos.MailDTO;
 import com.ticketninja.pilot.exceptions.ValidatorException;
 import com.ticketninja.pilot.model.MailContentFactory;
-import com.ticketninja.pilot.model.SendGridMailService;
 import com.ticketninja.pilot.model.UserInfo;
 import com.ticketninja.pilot.model.VerificationHtmlMailContent;
 import com.ticketninja.pilot.model.VerificationMailContent;
@@ -36,23 +37,35 @@ public class EmailServiceImpl implements IEmailService {
 
 	private static final Logger LOGGER = Logger.getLogger(UserInfoDAOImpl.class.getName());
 
+	private SendGrid sendGrid = new SendGrid("UniTeam", "Thecrew4");
+
+	public void sendGridMailSending(SendGrid.Email mail) {
+		try {
+			SendGrid.Response response = sendGrid.send(mail);
+			System.out.println(response.getMessage());
+		} catch (SendGridException e) {
+			LOGGER.log(Level.ALL, e.getMessage(), e);
+		}
+	}
+
 	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
 	}
 
-	public void sendMail(MailValidationDTO mailDto) {
+	public void sendMail(MailDTO mailDto) {
 
 		content = factory.createVerificationMailContent(mailDto);
 		mailSender.send(content.getSimpleMailMessage());
 	}
 
-	public void sendHtmlMail(MailValidationDTO mailDto) {
+	public void sendHtmlMail(MailDTO mailDto) {
 
 		htmlContent = factory.createVerificationHtmlMailContent(mailDto);
-		mailSender.send(htmlContent.getMimeMessage(mailSender, mailDto.getLogoResource(),mailDto.getBackgroundResource()));
+		mailSender.send(
+				htmlContent.getMimeMessage(mailSender, mailDto.getLogoResource(), mailDto.getBackgroundResource()));
 	}
 
-	public ResponseEntity<AttributeDTO> validateMailAddress(MailValidationDTO mailDto) {
+	public ResponseEntity<AttributeDTO> validateMailAddress(MailDTO mailDto) {
 		int isCorrect = 0;
 		try {
 			userDao.getUserByEmail(mailDto.getTo());
@@ -60,7 +73,9 @@ public class EmailServiceImpl implements IEmailService {
 		} catch (ValidatorException e) {
 			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
 			userDao.saveUser(user);
-			sendMail(mailDto);
+			//sendMail(mailDto);
+			factory.buildVerificationSendgridMail(mailDto);
+			sendGridMailSending(factory.getSendGridMailContent());
 			isCorrect = Status.OK.code();
 		} catch (Exception e) {
 			LOGGER.log(Level.ALL, e.getMessage(), e);
@@ -69,8 +84,8 @@ public class EmailServiceImpl implements IEmailService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
-	
-	public ResponseEntity<AttributeDTO> validateHtmlMailAddress(MailValidationDTO mailDto) {
+
+	public ResponseEntity<AttributeDTO> validateHtmlMailAddress(MailDTO mailDto) {
 		int isCorrect = 0;
 		try {
 			userDao.getUserByEmail(mailDto.getTo());
@@ -87,21 +102,19 @@ public class EmailServiceImpl implements IEmailService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
-	
-	public  ResponseEntity<AttributeDTO> sendgridEmail(MailValidationDTO mailDto){
+
+	public ResponseEntity<AttributeDTO> sendTruncatedDetailsSendGridMail(MailDTO mailDto) {
 		int isCorrect = 0;
 		try {
-			userDao.getUserByEmail(mailDto.getTo());
-			isCorrect = Status.ALREADYFOUNDMAILADDRESS.code();
+			mailDto.setUserInfo(userDao.getUserByEmail(mailDto.getTo()));
+			factory.buildTruncatedDetailsSendgridMail(mailDto);
+			sendGridMailSending(factory.getSendGridMailContent());
+			isCorrect = Status.OK.code();
 		} catch (ValidatorException e) {
 			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
 			userDao.saveUser(user);
-			SendGridMailService sendgridMailService=new SendGridMailService();
-			//sendgridMailService.activateTemplate();
-			sendgridMailService.buildSendgridMail(mailDto);
-			sendgridMailService.sendgridEmailSending();
-			isCorrect = Status.OK.code();
-		}catch (Exception e) {
+			isCorrect = Status.MAILADDRESSNOTFOUND.code();
+		} catch (Exception e) {
 			LOGGER.log(Level.ALL, e.getMessage(), e);
 		} finally {
 			attDto.addAttribute(isCorrect);
@@ -109,24 +122,37 @@ public class EmailServiceImpl implements IEmailService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 	
+	public ResponseEntity<AttributeDTO> sendWholeDetailsSendGridMail(MailDTO mailDto) {
+		int isCorrect = 0;
+		try {
+			mailDto.setUserInfo(userDao.getUserByEmail(mailDto.getTo()));
+			factory.buildWholeDetailsSendGridMail(mailDto);
+			sendGridMailSending(factory.getSendGridMailContent());
+			isCorrect = Status.OK.code();
+		} catch (ValidatorException e) {
+			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
+			userDao.saveUser(user);
+			isCorrect = Status.MAILADDRESSNOTFOUND.code();
+		} catch (Exception e) {
+			LOGGER.log(Level.ALL, e.getMessage(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+	}
+
 	/*
-	public ResponseEntity<AttributeDTO> sendAllDetailsToUser(MailValidationDTO mailDto) {
-		int isCorrect = 0;
-		try {
-			UserInfo user=userDao.getUserByEmail(mailDto.getTo());
-			sendHtmlMail(mailDto);
-			isCorrect = Status.OK.code();
-		} catch (ValidatorException e) {
-			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
-			userDao.saveUser(user);
-			
-			
-		} catch (Exception e) {
-			LOGGER.log(Level.ALL, e.getMessage(), e);
-		} finally {
-			attDto.addAttribute(isCorrect);
-		}
-		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
-	}*/
-	
+	 * public ResponseEntity<AttributeDTO> sendAllDetailsToUser(MailValidationDTO
+	 * mailDto) { int isCorrect = 0; try { UserInfo
+	 * user=userDao.getUserByEmail(mailDto.getTo()); sendHtmlMail(mailDto);
+	 * isCorrect = Status.OK.code(); } catch (ValidatorException e) { UserInfo user
+	 * = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
+	 * userDao.saveUser(user);
+	 * 
+	 * 
+	 * } catch (Exception e) { LOGGER.log(Level.ALL, e.getMessage(), e); } finally {
+	 * attDto.addAttribute(isCorrect); } return new
+	 * ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK); }
+	 */
+
 }
