@@ -71,7 +71,7 @@ public class EmailServiceImpl implements IEmailService {
 			userDao.getUserByEmail(mailDto.getTo());
 			isCorrect = Status.ALREADYFOUNDMAILADDRESS.code();
 		} catch (ValidatorException e) {
-			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.getCheckSum());
+			UserInfo user = new UserInfo(mailDto.getTo(), mailDto.generateCheckSum());
 			user.setLang(mailDto.getLang());
 			userDao.saveUser(user);
 			//A MailContentFactory egységessége végett kell a mailDto-ba is menteni a usert.

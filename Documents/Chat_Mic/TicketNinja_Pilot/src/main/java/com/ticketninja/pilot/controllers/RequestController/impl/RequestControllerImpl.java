@@ -79,7 +79,7 @@ public class RequestControllerImpl implements IRequestController {
 			@RequestParam("lastName") String lastName, @RequestParam("mail") String mail,
 			@RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setContName(firstName + lastName);
+		innerDto.setContName(firstName+" "+lastName);
 		innerDto.setMail(mail);
 		return service.saveContactName(innerDto);
 	}
@@ -124,7 +124,7 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	// Validate checksum that sent in e-mail
-	@RequestMapping(value = "/validateCheckSum", method = RequestMethod.GET)
+	@RequestMapping(value = "/validateCheckSum", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> validateCheckSum(@RequestParam("checkSum") String checkSumFromUser,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
@@ -134,7 +134,7 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	// Send e-mail to user with checksum and store user by its e-mail
-	@RequestMapping(value = "/validateMail", method = RequestMethod.GET)
+	@RequestMapping(value = "/validateMail", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,
 			@RequestParam("lang") String lang, @RequestParam("isCorrect") String isCorrect) {
 		MailDTO mailDto = new MailDTO(mail);

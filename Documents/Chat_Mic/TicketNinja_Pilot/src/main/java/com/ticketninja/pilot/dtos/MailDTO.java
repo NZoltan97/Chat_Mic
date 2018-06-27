@@ -55,18 +55,13 @@ public class MailDTO {
 		this.userInfo = userInfo;
 	}
 
-
 	public Resource getBackgroundResource() {
 		return backgroundResource;
 	}
 
-
-
 	public void setBackgroundResource(Resource backgroundResource) {
 		this.backgroundResource = backgroundResource;
 	}
-
-
 
 	public String getTo() {
 		return to;
@@ -137,7 +132,7 @@ public class MailDTO {
 		return checkSum;
 	}
 	
-	public int setCheckS() {
+	public int generateCheckSum() {
 		Random rnd = new Random();
 		this.checkSum = (rnd.nextInt(8999) + 1000);
 		return (Integer)this.checkSum;
