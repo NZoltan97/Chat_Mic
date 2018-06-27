@@ -35,11 +35,11 @@ public class UserInfo implements Serializable{
 	@Column(name="orgStreet")
 	private String orgStreet;
 
-	@Column(name="houseNum")
-	private String houseNum;
+	@Column(name="orgHouseNum")
+	private String orgHouseNum;
 
-	@Column(name="zipCode")
-	private String zipCode;
+	@Column(name="orgZipCode")
+	private String orgZipCode;
 	
 	@Column(name="eventName")
 	private String eventName;
@@ -121,20 +121,20 @@ public class UserInfo implements Serializable{
 		this.orgStreet = orgStreet;
 	}
 
-	public String getHouseNum() {
-		return houseNum;
+	public String getOrgHouseNum() {
+		return orgHouseNum;
 	}
 
-	public void setHouseNum(String houseNum) {
-		this.houseNum = houseNum;
+	public void setOrgHouseNum(String orgHouseNum) {
+		this.orgHouseNum = orgHouseNum;
 	}
 
-	public String getZipCode() {
-		return zipCode;
+	public String getOrgZipCode() {
+		return orgZipCode;
 	}
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+	public void setOrgZipCode(String orgZipCode) {
+		this.orgZipCode = orgZipCode;
 	}
 	
 	public void setEventName(String eventName) {

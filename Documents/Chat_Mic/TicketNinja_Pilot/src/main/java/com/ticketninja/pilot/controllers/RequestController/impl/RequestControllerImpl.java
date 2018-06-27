@@ -25,7 +25,7 @@ public class RequestControllerImpl implements IRequestController {
 	@Autowired
 	ResourceLoader loader;
 
-	// Get organization name
+	// Get the Organization's name
 
 	@RequestMapping(value = "/sendOrgName", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> sendOrganizationName(@RequestParam("orgName") String orgName,
@@ -36,47 +36,47 @@ public class RequestControllerImpl implements IRequestController {
 		return service.saveOrganizationName(innerDto);
 	}
 
-	// Get organizer's zip code
+	// Get the Organization's zip code
 	@RequestMapping(value = "/sendOrgZip", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendOrganisersZipCode(@RequestParam("zipCode") String zipCode,
+	public ResponseEntity<AttributeDTO> sendOrganisersZipCode(@RequestParam("orgZipCode") String orgZipCode,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setZipCode(zipCode);
+		innerDto.setZipCode(orgZipCode);
 		innerDto.setMail(mail);
 		return service.saveOrganisersZipCode(innerDto);
 	}
 
-	// Get organizer's settlement
-	@RequestMapping(value = "/sendSettlement", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendOrganisersSettlement(@RequestParam("settlement") String settlement,
+	// Get Organizetion's settlement
+	@RequestMapping(value = "/sendOrgSettlement", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendOrganisersSettlement(@RequestParam("orgSettlement") String orgSettlement,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setOrgSettlement(settlement);
+		innerDto.setOrgSettlement(orgSettlement);
 		innerDto.setMail(mail);
 		return service.saveOrganisersSettlement(innerDto);
 	}
 
-	// Get organizer's street
-	@RequestMapping(value = "/sendStreet", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendOrganisersStreet(@RequestParam("street") String street,
+	// Get Organization's street
+	@RequestMapping(value = "/sendOrgStreet", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendOrganisersStreet(@RequestParam("orgStreet") String orgStreet,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setOrgStreet(street);
+		innerDto.setOrgStreet(orgStreet);
 		innerDto.setMail(mail);
 		return service.saveOrganisersStreet(innerDto);
 	}
 
-	// Get organizer's house number
-	@RequestMapping(value = "/sendHouseNum", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendOrganisersHouseNumber(@RequestParam("houseNum") String houseNum,
+	// Get Organization's house number
+	@RequestMapping(value = "/sendOrgHouseNum", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendOrganisersHouseNumber(@RequestParam("orgHouseNum") String orgHouseNum,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setHouseNum(houseNum);
+		innerDto.setHouseNum(orgHouseNum);
 		innerDto.setMail(mail);
 		return service.saveOrganisersHouseNumber(innerDto);
 	}
 
-	// Get organizer's fullname
+	// Get organizer's full name
 	@RequestMapping(value = "/sendContactNameFB", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> sendContactNameFB(@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName, @RequestParam("mail") String mail,
@@ -117,13 +117,13 @@ public class RequestControllerImpl implements IRequestController {
 	}
 
 	// Get the event's starting date
-	@RequestMapping(value = "/sendDate", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendDate(@RequestParam("date") String date, @RequestParam("mail") String mail,
+	@RequestMapping(value = "/sendEventDate", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> sendEventDate(@RequestParam("eventDate") String eventDate, @RequestParam("mail") String mail,
 			@RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setDate(date);
+		innerDto.setEventDate(eventDate);
 		innerDto.setMail(mail);
-		return service.saveDate(innerDto);
+		return service.saveEventDate(innerDto);
 	}
 
 	// Validate checksum that sent in e-mail

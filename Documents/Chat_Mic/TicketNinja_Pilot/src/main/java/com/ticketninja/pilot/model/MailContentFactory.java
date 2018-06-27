@@ -77,7 +77,7 @@ public class MailContentFactory {
 		sendGridMailContent.addSubstitution("-orgName-", new String[] { mailDto.getUserInfo().getOrgName() });
 		sendGridMailContent.addSubstitution("-orgSettlement-", new String[] { mailDto.getUserInfo().getOrgSettlement() });
 		sendGridMailContent.addSubstitution("-orgStreet-", new String[] { mailDto.getUserInfo().getOrgStreet() });
-		sendGridMailContent.addSubstitution("-houseNum-", new String[] { mailDto.getUserInfo().getHouseNum() });
+		sendGridMailContent.addSubstitution("-orgHouseNum-", new String[] { mailDto.getUserInfo().getOrgHouseNum() });
 	}
 
 	public SendGrid.Email getSendGridMailContent() {

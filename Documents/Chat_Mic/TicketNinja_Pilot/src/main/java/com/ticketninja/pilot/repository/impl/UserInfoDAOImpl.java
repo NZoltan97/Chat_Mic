@@ -86,15 +86,15 @@ public class UserInfoDAOImpl {
 		saveUser(userFromDB);
 	}
 
-	public void setHouseNum(String houseNum, String mail) throws ValidatorException {
+	public void setOrgHouseNum(String orgHouseNum, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
-		userFromDB.setHouseNum(houseNum);
+		userFromDB.setHouseNum(orgHouseNum);
 		saveUser(userFromDB);
 	}
 
-	public void setZipCode(String zipCode, String mail) throws ValidatorException {
+	public void setOrgZipCode(String orgZipCode, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
-		userFromDB.setZipCode(zipCode);
+		userFromDB.setZipCode(orgZipCode);
 		saveUser(userFromDB);
 	}
 	
@@ -104,9 +104,9 @@ public class UserInfoDAOImpl {
 		saveUser(userFromDB);
 	}
 	
-	public void setDate(String date, String mail) throws ValidatorException {
+	public void setEventDate(String eventDate, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
-		userFromDB.setEventDate(date);
+		userFromDB.setEventDate(eventDate);
 		saveUser(userFromDB);
 	}
 

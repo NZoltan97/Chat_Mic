@@ -16,5 +16,5 @@ public interface IMainService {
 	public ResponseEntity<AttributeDTO> saveContactsComment(InnerDTO innerDto);
 	public ResponseEntity<AttributeDTO> validateCheckSum(InnerDTO innerDto);
 	public ResponseEntity<AttributeDTO> saveEventName(InnerDTO innerDto);
-	public ResponseEntity<AttributeDTO> saveDate(InnerDTO innerDto);
+	public ResponseEntity<AttributeDTO> saveEventDate(InnerDTO innerDto);
 }

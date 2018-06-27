@@ -12,16 +12,16 @@ public interface IRequestController {
 	public ResponseEntity<AttributeDTO> sendOrganizationName(@RequestParam("orgName") String orgName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
-	public ResponseEntity<AttributeDTO> sendOrganisersZipCode(@RequestParam("zipCode") String zipCode,
+	public ResponseEntity<AttributeDTO> sendOrganisersZipCode(@RequestParam("orgZipCode") String orgZipCode,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
-	public ResponseEntity<AttributeDTO> sendOrganisersSettlement(@RequestParam("settlement") String settlement,
+	public ResponseEntity<AttributeDTO> sendOrganisersSettlement(@RequestParam("orgSettlement") String orgSettlement,
 			@RequestParam("isCorrect") String isCorrect, @RequestParam("mail") String mail);
 
-	public ResponseEntity<AttributeDTO> sendOrganisersStreet(@RequestParam("street") String street,
+	public ResponseEntity<AttributeDTO> sendOrganisersStreet(@RequestParam("orgStreet") String orgStreet,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
-	public ResponseEntity<AttributeDTO> sendOrganisersHouseNumber(@RequestParam("houseNum") String houseNum,
+	public ResponseEntity<AttributeDTO> sendOrganisersHouseNumber(@RequestParam("orgHouseNum") String orgHouseNum,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
 	public ResponseEntity<AttributeDTO> sendContactNameFB(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName,
@@ -33,7 +33,7 @@ public interface IRequestController {
 	public ResponseEntity<AttributeDTO> sendEventName(@RequestParam("eventName") String eventName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 	
-	public ResponseEntity<AttributeDTO> sendDate(@RequestParam("date") String date,
+	public ResponseEntity<AttributeDTO> sendEventDate(@RequestParam("eventDate") String eventDate,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
 
 	public ResponseEntity<AttributeDTO> sendComment(@RequestParam("comment") String comment,

@@ -51,7 +51,7 @@ public class MainServiceImpl implements IMainService {
 		int isCorrect = 0;
 		try {
 			validator.validateZip(innerDto.getZipCode());
-			userDao.setZipCode(innerDto.getZipCode(), innerDto.getMail());
+			userDao.setOrgZipCode(innerDto.getOrgZipCode(), innerDto.getMail());
 			isCorrect = Status.OK.code();
 		} catch (ValidatorException e) {
 			isCorrect = e.getStatus().code();
@@ -95,8 +95,8 @@ public class MainServiceImpl implements IMainService {
 	public ResponseEntity<AttributeDTO> saveOrganisersHouseNumber(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
-			validator.validateHnumber(innerDto.getHouseNum());
-			userDao.setHouseNum(innerDto.getHouseNum(), innerDto.getMail());
+			validator.validateHnumber(innerDto.getOrgHouseNum());
+			userDao.setOrgHouseNum(innerDto.getOrgHouseNum(), innerDto.getMail());
 			isCorrect = Status.OK.code();
 		} catch (ValidatorException e) {
 			isCorrect = e.getStatus().code();
@@ -137,11 +137,11 @@ public class MainServiceImpl implements IMainService {
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
 	
-	public ResponseEntity<AttributeDTO> saveDate(InnerDTO innerDto) {
+	public ResponseEntity<AttributeDTO> saveEventDate(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
-			validator.validateDate(innerDto.getDate());
-			userDao.setDate(innerDto.getDate(), innerDto.getMail());
+			validator.validateEventDate(innerDto.getEventDate());
+			userDao.setEventDate(innerDto.getEventDate(), innerDto.getMail());
 			isCorrect = Status.OK.code();
 		} catch (ValidatorException e) {
 			isCorrect = e.getStatus().code();

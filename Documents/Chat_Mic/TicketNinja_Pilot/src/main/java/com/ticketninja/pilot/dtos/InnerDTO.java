@@ -12,13 +12,13 @@ public class InnerDTO {
 
 	private String orgStreet;
 
-	private String houseNum;
+	private String orgHouseNum;
 
-	private String zipCode;	
+	private String orgZipCode;	
 	
 	private String eventName;
 	
-	private String date;
+	private String eventDate;
 	
 	private String checkSum;
 	
@@ -81,20 +81,20 @@ public class InnerDTO {
 		this.orgStreet = orgStreet;
 	}
 
-	public String getHouseNum() {
-		return houseNum;
+	public String getOrgHouseNum() {
+		return orgHouseNum;
 	}
 
-	public void setHouseNum(String houseNum) {
-		this.houseNum = houseNum;
+	public void setOrgHouseNum(String orgHouseNum) {
+		this.orgHouseNum = orgHouseNum;
 	}
 
-	public String getZipCode() {
-		return zipCode;
+	public String getOrgZipCode() {
+		return orgZipCode;
 	}
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+	public void setOrgZipCode(String orgZipCode) {
+		this.orgZipCode = orgZipCode;
 	}
 	
 	public void setEventName(String eventName) {
@@ -105,12 +105,12 @@ public class InnerDTO {
 		return eventName;
 	}
 	
-	public void setDate(String date) {
-		this.date = date;
+	public void setEventDate(String eventDate) {
+		this.eventDate = eventDate;
 	}
 	
-	public String getDate() {
-		return date;
+	public String getEventDate() {
+		return eventDate;
 	}
 
 	public String getCheckSum() {
