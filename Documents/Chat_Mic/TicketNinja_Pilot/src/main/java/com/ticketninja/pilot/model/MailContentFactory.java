@@ -5,7 +5,7 @@ import com.ticketninja.pilot.dtos.MailDTO;
 
 public class MailContentFactory {
 
-	private SendGrid.Email sendGridMailContent;
+	SendGrid.Email sendGridMailContent;
 
 	public VerificationMailContent createVerificationMailContent(MailDTO dto) {
 		VerificationMailContent content = new VerificationMailContent();
@@ -25,24 +25,16 @@ public class MailContentFactory {
 		return content;
 	}
 
-	// SendGrid builder
-
-	private void SendGridInit() {
-		sendGridMailContent = new SendGrid.Email();
-		sendGridMailContent.setFrom("uniteamsze@gmail.com");
-		sendGridMailContent.setFromName("UniTeam");
-		sendGridMailContent.setText(" ");
-		sendGridMailContent.setHtml(" ");
-	}
-
+	// SendGrid builders
 	public void buildTruncatedDetailsSendgridMail(MailDTO mailDto) {
-		SendGridInit();
-		sendGridMailContent.setSubject(mailDto.getSubject());
+		sendGridMailContent=SendGridMailContent.sendGridInit();
 		sendGridMailContent.addTo(mailDto.getTo());
-		if (mailDto.getLang().compareTo("hun") == 0) {
+		if (mailDto.getUserInfo().getLang().compareTo("hun") == 0) {
 			sendGridMailContent.addFilter("templates", "template_id", "4b8c8aed-16d0-4bb6-ac6b-ea3d86bb2f7a");
+			sendGridMailContent.setSubject("Összegző e-mail");
 		} else {
 			sendGridMailContent.addFilter("templates", "template_id", "10cdc900-ad8c-480f-baaa-e6e3416c0325");
+			sendGridMailContent.setSubject("Details");
 		}
 		sendGridMailContent.addSubstitution("-contName-", new String[] { mailDto.getUserInfo().getContName() });
 		sendGridMailContent.addSubstitution("-eventName-", new String[] { mailDto.getUserInfo().getEventName() });
@@ -51,25 +43,27 @@ public class MailContentFactory {
 	}
 
 	public void buildVerificationSendgridMail(MailDTO mailDto) {
-		SendGridInit();
-		sendGridMailContent.setSubject(mailDto.getSubject());
+		sendGridMailContent=SendGridMailContent.sendGridInit();
 		sendGridMailContent.addTo(mailDto.getTo());
-		if (mailDto.getLang().compareTo("hun") == 0) {
+		if (mailDto.getUserInfo().getLang().compareTo("hun") == 0) {
 			sendGridMailContent.addFilter("templates", "template_id", "c57069d6-b9a8-42b3-aba4-7647a6167db6");
+			sendGridMailContent.setSubject("E-mail verifikáció");
 		} else {
 			sendGridMailContent.addFilter("templates", "template_id", "1dcce943-c66b-4c1a-abbf-ece61a2df534");
+			sendGridMailContent.setSubject("E-mail verification");
 		}
 		sendGridMailContent.addSubstitution("-verificationCode-", new String[] { "" + mailDto.getCheckSum() });
 	}
 
 	public void buildWholeDetailsSendGridMail(MailDTO mailDto) {
-		SendGridInit();
-		sendGridMailContent.setSubject(mailDto.getSubject());
+		sendGridMailContent=SendGridMailContent.sendGridInit();
 		sendGridMailContent.addTo(mailDto.getTo());
-		if (mailDto.getLang().compareTo("hun") == 0) {
+		if (mailDto.getUserInfo().getLang().compareTo("hun") == 0) {
 			sendGridMailContent.addFilter("templates", "template_id", "5b9c9caf-01c4-45cb-ad05-fca449d9cb4c");
+			sendGridMailContent.setSubject("Összegző e-mail");
 		} else {
 			sendGridMailContent.addFilter("templates", "template_id", "82aeaf44-44ba-4c57-8ba6-60796156e23d");
+			sendGridMailContent.setSubject("Details");
 		}
 		sendGridMailContent.addSubstitution("-contName-", new String[] { mailDto.getUserInfo().getContName() });
 		sendGridMailContent.addSubstitution("-eventName-", new String[] { mailDto.getUserInfo().getEventName() });
@@ -83,9 +77,4 @@ public class MailContentFactory {
 	public SendGrid.Email getSendGridMailContent() {
 		return sendGridMailContent;
 	}
-
-	public void setSendGridMailContent(SendGrid.Email sendGridMailContent) {
-		this.sendGridMailContent = sendGridMailContent;
-	}
-
 }

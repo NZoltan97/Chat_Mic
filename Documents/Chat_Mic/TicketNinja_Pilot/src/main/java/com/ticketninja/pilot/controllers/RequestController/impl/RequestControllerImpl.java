@@ -1,8 +1,6 @@
 package com.ticketninja.pilot.controllers.RequestController.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,11 +20,10 @@ public class RequestControllerImpl implements IRequestController {
 	MainServiceImpl service;
 	@Autowired
 	EmailServiceImpl mailService;
-	@Autowired
-	ResourceLoader loader;
+	// @Autowired
+	// ResourceLoader loader;
 
 	// Get the Organization's name
-
 	@RequestMapping(value = "/sendOrgName", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> sendOrganizationName(@RequestParam("orgName") String orgName,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
@@ -41,7 +38,7 @@ public class RequestControllerImpl implements IRequestController {
 	public ResponseEntity<AttributeDTO> sendOrganisersZipCode(@RequestParam("orgZipCode") String orgZipCode,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setZipCode(orgZipCode);
+		innerDto.setOrgZipCode(orgZipCode);
 		innerDto.setMail(mail);
 		return service.saveOrganisersZipCode(innerDto);
 	}
@@ -71,7 +68,7 @@ public class RequestControllerImpl implements IRequestController {
 	public ResponseEntity<AttributeDTO> sendOrganisersHouseNumber(@RequestParam("orgHouseNum") String orgHouseNum,
 			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setHouseNum(orgHouseNum);
+		innerDto.setOrgHouseNum(orgHouseNum);
 		innerDto.setMail(mail);
 		return service.saveOrganisersHouseNumber(innerDto);
 	}
@@ -118,8 +115,8 @@ public class RequestControllerImpl implements IRequestController {
 
 	// Get the event's starting date
 	@RequestMapping(value = "/sendEventDate", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> sendEventDate(@RequestParam("eventDate") String eventDate, @RequestParam("mail") String mail,
-			@RequestParam("isCorrect") String isCorrect) {
+	public ResponseEntity<AttributeDTO> sendEventDate(@RequestParam("eventDate") String eventDate,
+			@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setEventDate(eventDate);
 		innerDto.setMail(mail);
@@ -140,77 +137,56 @@ public class RequestControllerImpl implements IRequestController {
 	@RequestMapping(value = "/validateMail", method = RequestMethod.GET)
 	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,
 			@RequestParam("lang") String lang, @RequestParam("isCorrect") String isCorrect) {
-		MailDTO mailDto = new MailDTO(mail, "Email verifikáció");
-		Resource htmlResource = loader.getResource("classpath:static/htmlmailHUN.html");
-		if (lang.compareTo("eng") == 0) {
-			mailDto = new MailDTO(mail, "Email verification");
-			htmlResource = loader.getResource("classpath:static/htmlmailENG.html");
-		}
-		Resource cssResource = loader.getResource("classpath:static/appearenceMail.css");
-		Resource logoResource = loader.getResource("classpath:static/ninja_logo.png");
-		Resource backgroundResource = loader.getResource("classpath:static/backgroundv5.png");
-		mailDto.addParameter("checkSum", mailDto.setCheckS());
-		mailDto.setBackgroundResource(backgroundResource);
-		mailDto.setHtmlResource(htmlResource);
-		mailDto.setCssResource(cssResource);
-		mailDto.setLogoResource(logoResource);
-		mailDto.setChangeTokenCss("<css>");
-		mailDto.setChangeTokenHtml("<params>");
+		MailDTO mailDto = new MailDTO(mail);
+		// Resource htmlResource =
+		// loader.getResource("classpath:static/htmlmailHUN.html");
+		// htmlResource = loader.getResource("classpath:static/htmlmailENG.html");
+		mailDto.setLang(lang);
+		// Resource cssResource =
+		// loader.getResource("classpath:static/appearenceMail.css");
+		// Resource logoResource =
+		// loader.getResource("classpath:static/ninja_logo.png");
+		// Resource backgroundResource =
+		// loader.getResource("classpath:static/backgroundv5.png");
+		// mailDto.addParameter("checkSum", mailDto.setCheckS());
+		// mailDto.setBackgroundResource(backgroundResource);
+		// mailDto.setHtmlResource(htmlResource);
+		// mailDto.setCssResource(cssResource);
+		// mailDto.setLogoResource(logoResource);
+		// mailDto.setChangeTokenCss("<css>");
+		// mailDto.setChangeTokenHtml("<params>");
 
-		return mailService.validateMailAddress(mailDto);
+		return mailService.validateHtmlMailAddress(mailDto);
 	}
 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> deleteUser(@RequestParam("mail") String mail) {
+	public ResponseEntity<AttributeDTO> deleteUser(@RequestParam("mail") String mail,
+			@RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
 		innerDto.setMail(mail);
 		return service.deleteUser(innerDto);
 	}
 
-	@RequestMapping(value = "/sendTruncatedDetailsSendGridMail", method = RequestMethod.GET)
+	@RequestMapping(value = "/sendTruncatedDetailsSendGridMail", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> truncatedSendGridMail(@RequestParam("mail") String mail,
-			@RequestParam("lang") String lang) {
-		MailDTO mailDto = new MailDTO(mail, "Összegző e-mail");
-		if(lang.compareTo("eng")==0) {
-			mailDto = new MailDTO(mail, "Details");
-		}
-		mailDto.setLang(lang);
+			@RequestParam("isCorrect") String isCorrect) {
+		MailDTO mailDto = new MailDTO(mail);
 		return mailService.sendTruncatedDetailsSendGridMail(mailDto);
 	}
-	
-	@RequestMapping(value = "/sendWholeDetailsSendGridMail", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/sendWholeDetailsSendGridMail", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<AttributeDTO> wholeSendGridMail(@RequestParam("mail") String mail,
-			@RequestParam("lang") String lang) {
-		MailDTO mailDto = new MailDTO(mail, "Összegző e-mail");
-		if(lang.compareTo("eng")==0) {
-			mailDto = new MailDTO(mail, "Details");
-		}
-		mailDto.setLang(lang);
+			@RequestParam("isCorrect") String isCorrect) {
+		MailDTO mailDto = new MailDTO(mail);
 		return mailService.sendWholeDetailsSendGridMail(mailDto);
 	}
 
-	/*
-	 * @RequestMapping(value = "/sendDetailsToUser", method = RequestMethod.GET)
-	 * public ResponseEntity<AttributeDTO> sendDetailsToUser(@RequestParam("mail")
-	 * String mail, @RequestParam("lang") String lang,
-	 * 
-	 * @RequestParam("isCorrect") String isCorrect) { MailValidationDTO mailDto=new
-	 * MailValidationDTO(mail, "Email verifikáció"); Resource
-	 * htmlResource=loader.getResource("classpath:static/htmlmailHUN.html");
-	 * if(lang.compareTo("eng")==0) { mailDto=new MailValidationDTO(mail,
-	 * "Email verification");
-	 * htmlResource=loader.getResource("classpath:static/htmlmailENG.html"); }
-	 * Resource cssResource=loader.getResource("classpath:static/appearence.css");
-	 * Resource logoResource=loader.getResource("classpath:static/ninja_logo.png");
-	 * Resource
-	 * backgroundResource=loader.getResource("classpath:static/backgroundv5.png");
-	 * mailDto.addParameter("checkSum", mailDto.setCheckS());
-	 * mailDto.setBackgroundResource(backgroundResource);
-	 * mailDto.setHtmlResource(htmlResource); mailDto.setCssResource(cssResource);
-	 * mailDto.setLogoResource(logoResource); mailDto.setChangeTokenCss("<css>");
-	 * mailDto.setChangeTokenHtml("<params>");
-	 * 
-	 * return mailService.validateHtmlMailAddress(mailDto); }
-	 */
-
+	@RequestMapping(value = "/recieveFeedback", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<AttributeDTO> recieveFeedback(@RequestParam("mail") String mail,
+			@RequestParam("feedback") String feedback, @RequestParam("isCorrect") String isCorrect) {
+		InnerDTO innerDto = new InnerDTO();
+		innerDto.setMail(mail);
+		innerDto.setFeedback(feedback);
+		return service.saveFeedback(innerDto);
+	}
 }

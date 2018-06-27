@@ -88,13 +88,13 @@ public class UserInfoDAOImpl {
 
 	public void setOrgHouseNum(String orgHouseNum, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
-		userFromDB.setHouseNum(orgHouseNum);
+		userFromDB.setOrgHouseNum(orgHouseNum);
 		saveUser(userFromDB);
 	}
 
 	public void setOrgZipCode(String orgZipCode, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
-		userFromDB.setZipCode(orgZipCode);
+		userFromDB.setOrgZipCode(orgZipCode);
 		saveUser(userFromDB);
 	}
 	

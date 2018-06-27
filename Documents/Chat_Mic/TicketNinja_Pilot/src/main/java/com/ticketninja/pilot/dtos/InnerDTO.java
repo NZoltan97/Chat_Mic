@@ -25,6 +25,10 @@ public class InnerDTO {
 	private boolean isValid;
 	
 	private String comment;
+	
+	private String lang;
+	
+	private String feedback;
 
 	public InnerDTO() {};
 	
@@ -128,5 +132,20 @@ public class InnerDTO {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-		
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
 }

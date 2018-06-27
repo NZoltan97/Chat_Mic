@@ -55,7 +55,14 @@ public class UserInfo implements Serializable{
 	
 	@Column(name="comment")
 	private String comment;
+	
+	@Column(name="lang")
+	private String lang;
 
+	@Column(name="feedback")
+	private String feedback;
+	
+	
 	public UserInfo() {}
 
 	public UserInfo(String mail, int checkSum) {
@@ -169,4 +176,19 @@ public class UserInfo implements Serializable{
 		this.comment = comment;
 	}
 
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
 }

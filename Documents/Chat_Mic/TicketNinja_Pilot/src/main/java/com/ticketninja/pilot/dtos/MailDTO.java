@@ -25,9 +25,8 @@ public class MailDTO {
 	private Resource backgroundResource;
 	private String lang;
 	
-	public MailDTO(String to, String subject) {
+	public MailDTO(String to) {
 		this.to = to;
-		this.subject = subject;
 		parameters=new HashMap<String, Object>();
 	}
 	
@@ -127,13 +126,13 @@ public class MailDTO {
 	public Map<String, Object> getParameters() {
 		return parameters;
 	}
-	public void addParameters( Map<String, Object> parameters) {
-		this.parameters = parameters;
-	}
-	
-	public void addParameter(String key, Object value) {
-		this.parameters.put(key, value);
-	}
+//	public void addParameters( Map<String, Object> parameters) {
+//		this.parameters = parameters;
+//	}
+//	
+//	public void addParameter(String key, Object value) {
+//		this.parameters.put(key, value);
+//	}
 	public int getCheckSum() {
 		return checkSum;
 	}

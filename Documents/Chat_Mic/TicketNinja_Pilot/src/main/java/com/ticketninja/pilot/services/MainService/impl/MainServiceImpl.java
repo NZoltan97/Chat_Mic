@@ -31,7 +31,6 @@ public class MainServiceImpl implements IMainService {
 	private IValidator validator = new ValidatorImpl();
 
 	// Service methods
-
 	public ResponseEntity<AttributeDTO> saveOrganizationName(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
@@ -50,7 +49,7 @@ public class MainServiceImpl implements IMainService {
 	public ResponseEntity<AttributeDTO> saveOrganisersZipCode(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
-			validator.validateZip(innerDto.getZipCode());
+			validator.validateZip(innerDto.getOrgZipCode());
 			userDao.setOrgZipCode(innerDto.getOrgZipCode(), innerDto.getMail());
 			isCorrect = Status.OK.code();
 		} catch (ValidatorException e) {
@@ -173,6 +172,22 @@ public class MainServiceImpl implements IMainService {
 			UserInfo user = userDao.getUserByEmail(innerDto.getMail());
 			validator.validateCheckSum(innerDto.getCheckSum(), user);
 			user.setValid(true);
+			userDao.saveUser(user);
+			isCorrect = Status.OK.code();
+		} catch (ValidatorException e) {
+			isCorrect = e.getStatus().code();
+			LOGGER.log(Level.ALL, e.getStatus().description(), e);
+		} finally {
+			attDto.addAttribute(isCorrect);
+		}
+		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<AttributeDTO> saveFeedback(InnerDTO innerDto){
+		int isCorrect = 0;
+		try {
+			UserInfo user = userDao.getUserByEmail(innerDto.getMail());
+			user.setFeedback(innerDto.getFeedback());
 			userDao.saveUser(user);
 			isCorrect = Status.OK.code();
 		} catch (ValidatorException e) {

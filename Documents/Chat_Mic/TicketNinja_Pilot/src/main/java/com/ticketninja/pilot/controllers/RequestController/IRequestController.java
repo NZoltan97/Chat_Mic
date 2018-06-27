@@ -1,8 +1,8 @@
 package com.ticketninja.pilot.controllers.RequestController;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ticketninja.pilot.dtos.AttributeDTO;
@@ -45,6 +45,12 @@ public interface IRequestController {
 	public ResponseEntity<AttributeDTO> validateMail(@RequestParam("mail") String mail,
 			@RequestParam("isCorrect") String isCorrect, @RequestParam("lang") String lang);
 	
-	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<AttributeDTO> deleteUser(@RequestParam("mail") String mail);
+	public ResponseEntity<AttributeDTO> deleteUser(@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
+	
+	public ResponseEntity<AttributeDTO> truncatedSendGridMail(@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
+	
+	public ResponseEntity<AttributeDTO> wholeSendGridMail(@RequestParam("mail") String mail, @RequestParam("isCorrect") String isCorrect);
+	
+	public ResponseEntity<AttributeDTO> recieveFeedback(@RequestParam("mail") String mail,
+			@RequestParam("feedback") String feedback, @RequestParam("isCorrect") String isCorrect);
 }

@@ -17,4 +17,6 @@ public interface IMainService {
 	public ResponseEntity<AttributeDTO> validateCheckSum(InnerDTO innerDto);
 	public ResponseEntity<AttributeDTO> saveEventName(InnerDTO innerDto);
 	public ResponseEntity<AttributeDTO> saveEventDate(InnerDTO innerDto);
+	public ResponseEntity<AttributeDTO> saveFeedback(InnerDTO innerDto);
+	public ResponseEntity<AttributeDTO> deleteUser(InnerDTO innerDto);
 }
