@@ -198,12 +198,21 @@ public class RequestControllerImpl implements IRequestController {
 		return service.getFeedbacks();
 	}
 	
-	@CrossOrigin(origins="http://chatbot.synapps.hu")
+	@CrossOrigin
 	@RequestMapping(value= "/viewWebhook", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<ChatFuelDTO> viewWebhook(@RequestParam("hostName") String hostName) {
 		ChatFuelDTO Dto=new ChatFuelDTO();
 		Dto.addMessages(hostName);
 		return new ResponseEntity<ChatFuelDTO>(Dto, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/multiple", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ChatFuelDTO> multiple(@RequestParam("num") String num) {
+		ChatFuelDTO Dto=new ChatFuelDTO();
+		int result = Integer.parseInt(num) * Integer.parseInt(num);
+		Dto.addMessages(String.valueOf(result));
+		return new ResponseEntity<ChatFuelDTO>(Dto, HttpStatus.OK);
+		
 	}
 	
 }
