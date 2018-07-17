@@ -1,5 +1,6 @@
 package com.ticketninja.pilot.services.MainService.impl;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,10 +23,10 @@ import com.ticketninja.pilot.validator.impl.ValidatorImpl;
 public class MainServiceImpl implements IMainService {
 
 	private static final Logger LOGGER = Logger.getLogger(MainServiceImpl.class.getName());
-	
+
 	@Autowired
 	private UserInfoDAOImpl userDao;
-	
+
 	private AttributeDTO attDto = new AttributeDTO();
 
 	private IValidator validator = new ValidatorImpl();
@@ -120,7 +121,7 @@ public class MainServiceImpl implements IMainService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
-	
+
 	public ResponseEntity<AttributeDTO> saveEventName(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
@@ -135,7 +136,7 @@ public class MainServiceImpl implements IMainService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
-	
+
 	public ResponseEntity<AttributeDTO> saveEventDate(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
@@ -182,8 +183,8 @@ public class MainServiceImpl implements IMainService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
-	
-	public ResponseEntity<AttributeDTO> saveFeedback(InnerDTO innerDto){
+
+	public ResponseEntity<AttributeDTO> saveFeedback(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			UserInfo user = userDao.getUserByEmail(innerDto.getMail());
@@ -198,12 +199,12 @@ public class MainServiceImpl implements IMainService {
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
 	}
-	
+
 	public ResponseEntity<AttributeDTO> deleteUser(InnerDTO innerDto) {
 		int isCorrect = 0;
 		try {
 			userDao.delete(innerDto.getMail());
-			isCorrect=Status.OK.code();
+			isCorrect = Status.OK.code();
 		} catch (ValidatorException e) {
 			isCorrect = e.getStatus().code();
 			LOGGER.log(Level.ALL, e.getStatus().description(), e);
@@ -211,6 +212,42 @@ public class MainServiceImpl implements IMainService {
 			attDto.addAttribute(isCorrect);
 		}
 		return new ResponseEntity<AttributeDTO>(attDto, HttpStatus.OK);
+	}
+
+	public ResponseEntity<String> getFeedbacks() {
+		int[] fb = new int[5];
+		List<UserInfo> users = userDao.getAllUsers();
+		for (int i = 0; i < users.size(); ++i) {
+			UserInfo user = users.get(i);
+			switch (user.getFeedback()) {
+			case "1":
+				fb[0] = fb[0] + 1;
+				break;
+			case "2":
+				fb[1] = fb[1] + 1;
+				break;
+			case "3":
+				fb[2] = fb[2] + 1;
+				break;
+			case "4":
+				fb[3] = fb[3] + 1;
+				break;
+			case "5":
+				fb[4] = fb[4] + 1;
+				break;
+			}
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("Értékelések:");
+		sb.append("\n");
+		for (int i = 0; i < fb.length; i++) {
+			sb.append(i + 1);
+			sb.append(":");
+			if(fb[i]!=0) {
+				sb.append(""+fb[i]);
+			}
+		}
+		return new ResponseEntity<String>(sb.toString(),HttpStatus.OK);
 	}
 
 }

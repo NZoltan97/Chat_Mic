@@ -1,7 +1,7 @@
 package com.ticketninja.pilot.dtos;
 
 public class InnerDTO {
-	
+
 	private String orgName;
 
 	private String orgSettlement;
@@ -14,27 +14,28 @@ public class InnerDTO {
 
 	private String orgHouseNum;
 
-	private String orgZipCode;	
-	
+	private String orgZipCode;
+
 	private String eventName;
-	
+
 	private String eventDate;
-	
+
 	private String checkSum;
-	
+
 	private boolean isValid;
-	
+
 	private String comment;
-	
+
 	private String lang;
-	
+
 	private String feedback;
 
-	public InnerDTO() {};
-	
+	public InnerDTO() {
+	};
+
 	public InnerDTO(String mail) {
 		this.mail = mail;
-		this.isValid=false;
+		this.isValid = false;
 	}
 
 	public boolean isValid() {
@@ -100,19 +101,19 @@ public class InnerDTO {
 	public void setOrgZipCode(String orgZipCode) {
 		this.orgZipCode = orgZipCode;
 	}
-	
+
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
-	
+
 	public String getEventName() {
 		return eventName;
 	}
-	
+
 	public void setEventDate(String eventDate) {
 		this.eventDate = eventDate;
 	}
-	
+
 	public String getEventDate() {
 		return eventDate;
 	}

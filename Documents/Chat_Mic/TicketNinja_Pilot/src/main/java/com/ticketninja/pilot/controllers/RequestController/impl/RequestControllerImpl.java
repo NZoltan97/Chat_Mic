@@ -1,7 +1,9 @@
 package com.ticketninja.pilot.controllers.RequestController.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ticketninja.pilot.controllers.RequestController.IRequestController;
 import com.ticketninja.pilot.dtos.AttributeDTO;
+import com.ticketninja.pilot.dtos.ChatFuelDTO;
 import com.ticketninja.pilot.dtos.InnerDTO;
 import com.ticketninja.pilot.dtos.MailDTO;
 import com.ticketninja.pilot.services.EmailService.impl.EmailServiceImpl;
@@ -79,7 +82,7 @@ public class RequestControllerImpl implements IRequestController {
 			@RequestParam("lastName") String lastName, @RequestParam("mail") String mail,
 			@RequestParam("isCorrect") String isCorrect) {
 		InnerDTO innerDto = new InnerDTO();
-		innerDto.setContName(firstName+" "+lastName);
+		innerDto.setContName(firstName + " " + lastName);
 		innerDto.setMail(mail);
 		return service.saveContactName(innerDto);
 	}
@@ -189,4 +192,18 @@ public class RequestControllerImpl implements IRequestController {
 		innerDto.setFeedback(feedback);
 		return service.saveFeedback(innerDto);
 	}
+
+	@RequestMapping(value = "/viewFeedbacks", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<String> viewFeedbacks() {
+		return service.getFeedbacks();
+	}
+	
+	@CrossOrigin(origins="http://chatbot.synapps.hu")
+	@RequestMapping(value= "/viewWebhook", method = RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<ChatFuelDTO> viewWebhook(@RequestParam("hostName") String hostName) {
+		ChatFuelDTO Dto=new ChatFuelDTO();
+		Dto.addMessages(hostName);
+		return new ResponseEntity<ChatFuelDTO>(Dto, HttpStatus.OK);
+	}
+	
 }

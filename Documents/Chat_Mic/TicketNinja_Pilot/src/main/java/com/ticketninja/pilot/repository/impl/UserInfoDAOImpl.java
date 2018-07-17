@@ -1,8 +1,8 @@
 package com.ticketninja.pilot.repository.impl;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class UserInfoDAOImpl {
 		userDao.delete(user);
 	}
 
-	// Find by the mail address
+	// Find by mail address
 	public UserInfo getUserByEmail(String email) throws ValidatorException {
 		UserInfo user = new UserInfo();
 		user = userDao.findByMail(email);
@@ -97,13 +97,13 @@ public class UserInfoDAOImpl {
 		userFromDB.setOrgZipCode(orgZipCode);
 		saveUser(userFromDB);
 	}
-	
+
 	public void setEventName(String eventName, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
 		userFromDB.setEventName(eventName);
 		saveUser(userFromDB);
 	}
-	
+
 	public void setEventDate(String eventDate, String mail) throws ValidatorException {
 		UserInfo userFromDB = getUserByEmail(mail);
 		userFromDB.setEventDate(eventDate);
@@ -114,5 +114,9 @@ public class UserInfoDAOImpl {
 		UserInfo userFromDB = getUserByEmail(mail);
 		userFromDB.setComment(comment);
 		saveUser(userFromDB);
+	}
+
+	public List<UserInfo> getAllUsers() {
+		return userDao.findAll();
 	}
 }
